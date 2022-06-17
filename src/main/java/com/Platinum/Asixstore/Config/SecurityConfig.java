@@ -1,4 +1,4 @@
-package com.challange_4.apichallange4.Config;
+package com.Platinum.Asixstore.Config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,10 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/registration",
+        http.authorizeRequests().antMatchers("/registrasi",
                 "/swagger-ui.html/**","/refresh-token").permitAll();
         http.authorizeRequests().antMatchers("/login/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/films/submit").hasAnyAuthority("SELLER")
+        http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
                 .and().authorizeRequests().antMatchers("/api/films/display-all","/api/film/page-display/{page}/{size}").hasAnyAuthority("BUYER");
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya

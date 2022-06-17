@@ -14,17 +14,19 @@ public class UserService {
     @Autowired
     UserRepo userRepo;
 
-    public Boolean registrasi_user(UserDto userDto){
-        User user = new User();
-        user.setUserId(userDto.getUserId());
-        user.setNama(userDto.getNama());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setRoles(userDto.getRole());
-        userRepo.save(user);
-        return true;
-    }
+//    public Boolean registrasi_user(UserDto userDto){
+//        User user = new User();
+//        user.setUserId(userDto.getUserId());
+//        user.setNama(userDto.getNama());
+//        user.setEmail(userDto.getEmail());
+//        user.setPassword(userDto.getPassword());
+//        user.setRoles(userDto.getRole());
+//        userRepo.save(user);
+//        return true;
+//    }
     public List<User> show_user(){
         return userRepo.findAll();
     }
+
+
 }

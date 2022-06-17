@@ -1,8 +1,8 @@
-package com.challange_4.apichallange4.Service.Impl;
+package com.Platinum.Asixstore.Service.impl;
 
-import com.challange_4.apichallange4.Entity.User;
-import com.challange_4.apichallange4.Repository.UserRepo;
-import com.challange_4.apichallange4.Service.UserLoginService;
+import com.Platinum.Asixstore.Entity.User;
+import com.Platinum.Asixstore.Repository.UserRepo;
+import com.Platinum.Asixstore.Service.UserLoginService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +21,7 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserLoginServiceImpl implements  UserLoginService, UserDetailsService {
+public class UserLoginServiceImpl implements UserLoginService, UserDetailsService {
     @Autowired
     public UserRepo userRepo;
 
@@ -48,7 +48,7 @@ public class UserLoginServiceImpl implements  UserLoginService, UserDetailsServi
             logger.info(email + "found .!");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole())));
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
         return new org.springframework.security.core.userdetails.
                 User(user.getEmail(), user.getPassword(), authorities);
     }

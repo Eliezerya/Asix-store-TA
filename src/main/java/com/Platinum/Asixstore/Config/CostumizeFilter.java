@@ -1,4 +1,4 @@
-package com.challange_4.apichallange4.Config;
+package com.Platinum.Asixstore.Config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
