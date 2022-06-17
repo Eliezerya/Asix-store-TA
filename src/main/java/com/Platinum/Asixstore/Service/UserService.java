@@ -25,7 +25,6 @@ public class UserService {
         return true;
     }
     public List<User> show_user(){
-
         return userRepo.findAll();
     }
 }
