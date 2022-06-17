@@ -24,8 +24,8 @@ public class User {
     private String password;
     @Column(name = "alamat")
     private String alamat;
-    @Column(name = "noTelepon")
-    private long noTtelepon;
+    @Column(name = "no_Telepon")
+    private long noTelepon;
     @Column(name = "kota")
     private String kota;
 

@@ -6,17 +6,20 @@ import com.Platinum.Asixstore.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("registrasi")
+    @PostMapping("/registrasi")
     public ResponseEntity<?> registrasi_user(@RequestBody UserDto userDto){
+
         return new ResponseEntity<>(userService.registrasi_user(userDto),HttpStatus.CREATED);
+    }
+    @GetMapping("/user/display")
+    public ResponseEntity<?> display_user(){
+        return new ResponseEntity<>(userService.show_user(),HttpStatus.ACCEPTED);
     }
 }

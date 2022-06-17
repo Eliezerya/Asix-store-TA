@@ -6,6 +6,8 @@ import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -21,5 +23,9 @@ public class UserService {
         user.setRoles(userDto.getRole());
         userRepo.save(user);
         return true;
+    }
+    public List<User> show_user(){
+
+        return userRepo.findAll();
     }
 }
