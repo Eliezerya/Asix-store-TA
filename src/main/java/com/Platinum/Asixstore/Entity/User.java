@@ -26,8 +26,9 @@ public class User {
     private String alamat;
     @Column(name = "no_Telepon")
     private long noTelepon;
-    
+
     @Column(name = "kota")
+    
     private String kota;
 
     @ManyToMany(cascade=CascadeType.ALL)
