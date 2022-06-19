@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html/**","/refresh-token").permitAll();
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
-                .and().authorizeRequests().antMatchers("/api/films/display-all","/api/film/page-display/{page}/{size}").hasAnyAuthority("BUYER");
+                .and().authorizeRequests().antMatchers("/api/films/display-all","/user/update/{userId}").hasAnyAuthority("BUYER");
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya
         http.addFilterBefore(new CostumizeAuthorFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -14,7 +14,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private int userId;
     @Column(name = "nama")
     private String nama;
@@ -26,11 +26,10 @@ public class User {
     private String alamat;
     @Column(name = "no_Telepon")
     private long noTelepon;
-
     @Column(name = "kota")
-    
     private String kota;
-
+    @Lob
+    private byte[] img;
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
