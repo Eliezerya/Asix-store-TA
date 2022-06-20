@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/user/update/{userId}")
-    public ResponseEntity<?> update_user(@PathVariable int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
+    public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
     {
         userDto.setImg(fileUpload);
         userService.update_user(userId,userDto);
