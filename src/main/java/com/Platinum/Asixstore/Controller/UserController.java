@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 public class UserController {
@@ -25,8 +28,17 @@ public class UserController {
         return new ResponseEntity<>(userService.show_user(),HttpStatus.ACCEPTED);
     }
 
+    @PutMapping("/user/update/{userId}")
+    public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
+    {
+        userDto.setImg(fileUpload);
+        userService.update_user(userId,userDto);
+        User response = userService.display_userId(userId);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/registrasi")
-    public ResponseEntity<?> registration (@RequestBody User user ){
+    public ResponseEntity<?> submit_user (@RequestBody User user ){
 //        Map <String, String> map = new HashMap<>();
         User userLogin = userLoginService.findByUsername(user.getEmail());
         if (userLogin !=null){
