@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-public class Controller {
+public class BarangController {
     @Autowired
     BarangService barangService;
 

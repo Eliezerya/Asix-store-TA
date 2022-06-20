@@ -19,10 +19,6 @@ public class UserController {
     @Autowired
     UserLoginServiceImpl userLoginService;
 
-//    @PostMapping("/registrasi")
-//    public ResponseEntity<?> registrasi_user(@RequestBody UserDto userDto){
-//        return new ResponseEntity<>(userService.registrasi_user(userDto),HttpStatus.CREATED);
-//    }
     @GetMapping("/user/display")
     public ResponseEntity<?> display_user(){
         return new ResponseEntity<>(userService.show_user(),HttpStatus.ACCEPTED);
