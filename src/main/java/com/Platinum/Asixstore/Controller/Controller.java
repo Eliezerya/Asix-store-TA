@@ -6,17 +6,19 @@ import com.Platinum.Asixstore.Service.BarangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 public class Controller {
     @Autowired
     BarangService barangService;
 
-    @PostMapping("/submit/barang")
-    public ResponseEntity<?> submit_controller(@RequestBody BarangDto barangDto){
+    @PostMapping("/barang/daftar")
+    public ResponseEntity<?> submit_controller(BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload)throws IOException {
+        barangDto.setBarangImg(fileUpload);
         Barang barang = barangService.submit_barang(barangDto);
         return new ResponseEntity<>(barang, HttpStatus.CREATED);
     }

@@ -23,6 +23,10 @@ public class Barang {
     private String deskripsi;
     @Column(name = "tipe_barang")
     private String tipe;
+    @Lob
+    private byte[] barangImg;
+    @Column(name="stock")
+    private int stock;
     @Column(name = "harga_barang")
     private Long hargaBarang;
     @Column(name = "harga_tawar")
