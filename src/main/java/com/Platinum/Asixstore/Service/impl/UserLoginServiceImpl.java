@@ -31,6 +31,7 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
 
     public User saveUser(User userLogin) {
         userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
+
         return userRepo.save(userLogin);
     }
 
