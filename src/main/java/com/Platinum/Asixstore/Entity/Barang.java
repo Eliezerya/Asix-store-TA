@@ -22,7 +22,7 @@ public class Barang {
     @Column(name = "deskripsi")
     private String deskripsi;
     @Column(name = "tipe_barang")
-    private String tipe;
+    private String tipeBarang;
     @Lob
     private byte[] barangImg;
     @Column(name="stock")

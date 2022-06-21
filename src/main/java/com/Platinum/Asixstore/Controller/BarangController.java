@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class BarangController {
@@ -17,10 +18,23 @@ public class BarangController {
     BarangService barangService;
 
     @PostMapping("/barang/daftar")
-    public ResponseEntity<?> submit_controller(BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload)throws IOException {
+    public ResponseEntity<?> submit_barang(BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         barangDto.setBarangImg(fileUpload);
         Barang barang = barangService.submit_barang(barangDto);
         return new ResponseEntity<>(barang, HttpStatus.CREATED);
     }
 
+    @GetMapping("/barang")
+    public ResponseEntity<?> display_barang() {
+        List<Barang> barangs = barangService.display_barang();
+        return new ResponseEntity<>(barangs, HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value="/barang/{tipeBarang}", method=RequestMethod.GET)
+    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang)throws Exception{
+
+        List<Barang> barangFilter = barangService.filter_barang(tipeBarang);
+        return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
+
+    }
 }

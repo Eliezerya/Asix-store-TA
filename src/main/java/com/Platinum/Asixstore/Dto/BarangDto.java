@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-
 @Setter
 @Getter
 public class BarangDto {
@@ -13,7 +11,7 @@ public class BarangDto {
     private String merk;
     private String seri;
     private String deskripsi;
-    private String tipe;
+    private String tipeBarang;
     private MultipartFile barangImg;
     private int stock;
     private Long hargaBarang;

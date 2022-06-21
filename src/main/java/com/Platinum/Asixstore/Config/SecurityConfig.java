@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/registrasi",
-                "/swagger-ui.html/**","/refresh-token").permitAll();
+                "/swagger-ui.html/**","/refresh-token","/user/display").permitAll();
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
-                .and().authorizeRequests().antMatchers("/api/films/display-all","/user/update/{userId}").hasAnyAuthority("BUYER");
+                .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/daftar").hasAnyAuthority("BUYER");
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya
         http.addFilterBefore(new CostumizeAuthorFilter(), UsernamePasswordAuthenticationFilter.class);

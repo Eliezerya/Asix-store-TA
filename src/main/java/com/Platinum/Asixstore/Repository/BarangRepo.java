@@ -12,4 +12,5 @@ import java.util.List;
 public interface BarangRepo extends JpaRepository<Barang, Integer> {
     Barang findByBarangId(int barangId);
     List<Barang> findAll();
+    List<Barang> findByTipeBarang(String tipebarang);
 }
