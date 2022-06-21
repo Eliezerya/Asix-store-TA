@@ -19,7 +19,7 @@ public class AsixStoreApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/login").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
 			}
 		};
 	}
