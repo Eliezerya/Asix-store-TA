@@ -41,7 +41,6 @@ public class UserController {
 //            map.put(user.getUsername(), "username already exist");
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         }else {
-
             userLoginService.saveUser(user);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);

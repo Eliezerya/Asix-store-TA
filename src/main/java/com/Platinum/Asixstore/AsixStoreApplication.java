@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,8 +20,12 @@ public class AsixStoreApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/login").allowedOrigins("http://localhost:3000/auth/login");
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/**")
+						.allowedMethods(CorsConfiguration.ALL)
+						.allowedHeaders(CorsConfiguration.ALL)
+						.allowedOriginPatterns(CorsConfiguration.ALL);
+
+//				registry.addMapping("/**").allowedMethods("POST").allowedOrigins("http://localhost:3000");
 			}
 		};
 	}

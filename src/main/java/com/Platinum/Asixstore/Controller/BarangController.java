@@ -40,6 +40,5 @@ public class BarangController {
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("idBarang") int idBarang,BarangDto barangDto) {
         Barang barang = barangService.update_harga_tawar(idBarang,barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
-
     }
 }
