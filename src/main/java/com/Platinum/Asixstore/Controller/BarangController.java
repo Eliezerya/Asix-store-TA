@@ -36,9 +36,9 @@ public class BarangController {
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/barang/update/{idBarang}")
-    public ResponseEntity<?> beli_tawar_harga(@PathVariable("idBarang") int idBarang,BarangDto barangDto) {
-        Barang barang = barangService.update_harga_tawar(idBarang,barangDto);
+    @PutMapping("/barang/update/{barangId}")
+    public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId,BarangDto barangDto) {
+        Barang barang = barangService.update_harga_tawar(barangId,barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
     }
 }

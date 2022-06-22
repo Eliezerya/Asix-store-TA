@@ -2,6 +2,7 @@ package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
+import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ public class BarangService {
     UserRepo userRepo;
 
     public Barang submit_barang(BarangDto barangDto) throws IOException {
+        User user = new User();
         Barang barang = new Barang();
+        barang.setUser(user);
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
         barang.setDeskripsi(barangDto.getDeskripsi());

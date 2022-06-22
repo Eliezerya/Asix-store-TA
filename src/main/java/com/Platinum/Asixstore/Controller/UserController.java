@@ -1,5 +1,6 @@
 package com.Platinum.Asixstore.Controller;
 
+import com.Platinum.Asixstore.Dto.BuyerDto;
 import com.Platinum.Asixstore.Dto.UserDto;
 import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Service.UserService;
@@ -33,17 +34,31 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/registrasi")
-    public ResponseEntity<?> submit_user (@RequestBody User user ){
+    @PostMapping("/Buyer/registrasi")
+    public ResponseEntity<?> submit_user_buyer (@RequestBody BuyerDto buyerDto){
 //        Map <String, String> map = new HashMap<>();
-        User userLogin = userLoginService.findByUsername(user.getEmail());
+        User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
         if (userLogin !=null){
 //            map.put(user.getUsername(), "username already exist");
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         }else {
-            userLoginService.saveUser(user);
+            userLoginService.saveUserBuyer(buyerDto);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @PostMapping("/Seller/registrasi")
+    public ResponseEntity<?> submit_user_seller (@RequestBody BuyerDto buyerDto){
+//        Map <String, String> map = new HashMap<>();
+        User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
+        if (userLogin !=null){
+//            map.put(user.getUsername(), "username already exist");
+            return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
+        }else {
+            userLoginService.saveUserSeller(buyerDto);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
 
 }
