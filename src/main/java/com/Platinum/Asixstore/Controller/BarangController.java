@@ -30,11 +30,16 @@ public class BarangController {
         return new ResponseEntity<>(barangs, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value="/barang/{tipeBarang}", method=RequestMethod.GET)
-    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang)throws Exception{
-
+    @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET)
+    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
         List<Barang> barangFilter = barangService.filter_barang(tipeBarang);
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/barang/update/{idBarang}")
+    public ResponseEntity<?> beli_tawar_harga(@PathVariable("idBarang") int idBarang,BarangDto barangDto) {
+        Barang barang = barangService.update_harga_tawar(idBarang,barangDto);
+        return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
 
     }
 }

@@ -3,6 +3,7 @@ package com.Platinum.Asixstore.Service;
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
 import com.Platinum.Asixstore.Repository.BarangRepo;
+import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,10 @@ import java.util.List;
 public class BarangService {
     @Autowired
     BarangRepo barangRepo;
+    @Autowired
+    UserRepo userRepo;
 
-    public Barang submit_barang(BarangDto barangDto)throws IOException {
+    public Barang submit_barang(BarangDto barangDto) throws IOException {
         Barang barang = new Barang();
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
@@ -28,15 +31,23 @@ public class BarangService {
         return barangRepo.save(barang);
     }
 
-    public List<Barang> display_barang(){
+    public List<Barang> display_barang() {
         List<Barang> listBarang = barangRepo.findAll();
         return listBarang;
     }
 
-    public List<Barang> filter_barang(String tipeBarang) throws Exception{
-
+    public List<Barang> filter_barang(String tipeBarang) throws Exception {
         return barangRepo.findByTipeBarang(tipeBarang);
+    }
 
+    public Barang update_harga_tawar(int idBarang, BarangDto barangDto) {
+
+        Barang update = barangRepo.findByBarangId(idBarang);
+
+        update.setHargaTawar(barangDto.getHargaTawar());
+
+        Barang barang =barangRepo.save(update);
+        return barang;
 
     }
 }
