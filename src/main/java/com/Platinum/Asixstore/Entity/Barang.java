@@ -32,4 +32,9 @@ public class Barang {
     @Column(name = "harga_tawar")
     private Long hargaTawar;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 }

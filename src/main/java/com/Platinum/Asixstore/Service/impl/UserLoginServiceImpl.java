@@ -1,5 +1,7 @@
 package com.Platinum.Asixstore.Service.impl;
 
+import com.Platinum.Asixstore.Dto.UserDto;
+import com.Platinum.Asixstore.Entity.Role;
 import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.UserLoginService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +39,6 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
     }
 
     public User findByUsername(String email) {
-
         return userRepo.findByEmail(email);
     }
 

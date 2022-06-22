@@ -33,10 +33,10 @@ public class UserService {
         user.setNoTelepon(userDto.getNoTelepon());
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
-
         User updateUser = userRepo.save(user);
 
     }
+
 
 
 }

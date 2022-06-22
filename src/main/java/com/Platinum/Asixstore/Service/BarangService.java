@@ -41,13 +41,9 @@ public class BarangService {
     }
 
     public Barang update_harga_tawar(int idBarang, BarangDto barangDto) {
-
         Barang update = barangRepo.findByBarangId(idBarang);
-
         update.setHargaTawar(barangDto.getHargaTawar());
-
         Barang barang =barangRepo.save(update);
         return barang;
-
     }
 }
