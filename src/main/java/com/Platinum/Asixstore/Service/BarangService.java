@@ -19,9 +19,10 @@ public class BarangService {
     @Autowired
     UserRepo userRepo;
 
-    public Barang submit_barang(BarangDto barangDto)throws IOException {
+    public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
         Barang barang = new Barang();
-        User user = userRepo.findById(barangDto.getUserId());
+        User user = userRepo.findById(userId);
+        barangDto.setUserId(userId);
         barang.setUser(user);
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
@@ -30,7 +31,7 @@ public class BarangService {
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
         barang.setStock(barangDto.getStock());
         barang.setHargaBarang(barangDto.getHargaBarang());
-        barang.setHargaTawar(barangDto.getHargaTawar());
+        barang.setHargaTawar(barangDto.getHargaBarang());
 
         return barangRepo.save(barang);
     }
