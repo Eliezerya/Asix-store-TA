@@ -38,7 +38,6 @@ public class UserService {
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
         User updateUser = userRepo.save(user);
-
     }
 
 

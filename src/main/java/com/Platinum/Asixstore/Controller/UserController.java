@@ -36,10 +36,8 @@ public class UserController {
 
     @PostMapping("/Buyer/registrasi")
     public ResponseEntity<?> submit_user_buyer (@RequestBody BuyerDto buyerDto){
-//        Map <String, String> map = new HashMap<>();
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
         if (userLogin !=null){
-//            map.put(user.getUsername(), "username already exist");
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         }else {
             userLoginService.saveUserBuyer(buyerDto);
