@@ -23,7 +23,7 @@ public class AsixStoreApplication {
 				registry.addMapping("/**")
 						.allowedMethods(CorsConfiguration.ALL)
 						.allowedHeaders(CorsConfiguration.ALL)
-						.allowedOriginPatterns(CorsConfiguration.ALL);
+						.allowedOriginPatterns(CorsConfiguration.ALL).allowedOrigins("*");
 
 //				registry.addMapping("/**").allowedMethods("POST").allowedOrigins("http://localhost:3000");
 			}
