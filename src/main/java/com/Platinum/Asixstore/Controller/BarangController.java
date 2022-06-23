@@ -41,4 +41,14 @@ public class BarangController {
         Barang barang = barangService.update_harga_tawar(barangId,barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping("/barang/delete/{barangId}")
+    public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId){
+        boolean barang_status = barangService.delete_barang(barangId);
+        if (barang_status){
+            return new ResponseEntity<>(barang_status, HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(barang_status, HttpStatus.NO_CONTENT);
+        }
+    }
 }

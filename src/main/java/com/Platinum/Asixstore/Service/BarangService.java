@@ -43,10 +43,21 @@ public class BarangService {
         return barangRepo.findByTipeBarang(tipeBarang);
     }
 
-    public Barang update_harga_tawar(int idBarang, BarangDto barangDto) {
-        Barang update = barangRepo.findByBarangId(idBarang);
+    public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
+        Barang update = barangRepo.findByBarangId(barangId);
         update.setHargaTawar(barangDto.getHargaTawar());
         Barang barang =barangRepo.save(update);
         return barang;
+    }
+
+    public boolean delete_barang(int barangId){
+        Barang barang = barangRepo.findByBarangId(barangId);
+        if (barang != null) {
+            barangRepo.deleteById(barangId);
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }
