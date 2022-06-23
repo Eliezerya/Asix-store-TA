@@ -46,9 +46,9 @@ public class BarangController {
     @PutMapping("/barang/edit/{userId}/{barangId}")
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId,@PathVariable("userId") int userId, @RequestParam ("barangImg") MultipartFile fileUpload, BarangDto barangDto)throws  IOException{
         barangDto.setBarangImg(fileUpload);
-        barangService.edit_barang(barangId, barangDto);
+        barangService.edit_barang(barangId, userId, barangDto);
         Barang response = barangService.display_barang_byId(barangId);
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
 
     }

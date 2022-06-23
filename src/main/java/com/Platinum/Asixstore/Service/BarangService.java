@@ -52,9 +52,9 @@ public class BarangService {
         return barangRepo.findByBarangId(barangId);
     }
 
-    public void edit_barang(int barangId, BarangDto barangDto)throws IOException{
+    public void edit_barang(int barangId, int userId, BarangDto barangDto)throws IOException{
             Barang barang = barangRepo.findByBarangId(barangId);
-            User user = userRepo.findById(barangDto.getUserId());
+            User user = userRepo.findById(userId);
             barang.setUser(user);
             barang.setMerk(barangDto.getMerk());
             barang.setSeri(barangDto.getSeri());
