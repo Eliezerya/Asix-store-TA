@@ -35,12 +35,26 @@ public class BarangController {
         return new ResponseEntity<>(barangs, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value="/barang/{tipeBarang}", method=RequestMethod.GET)
-    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang)throws Exception{
-
+    @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET)
+    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
         List<Barang> barangFilter = barangService.filter_barang(tipeBarang);
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
+    }
 
+    @PutMapping("/barang/update/{barangId}")
+    public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId,BarangDto barangDto) {
+        Barang barang = barangService.update_harga_tawar(barangId,barangDto);
+        return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/barang/delete/{barangId}")
+    public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId){
+        boolean barang_status = barangService.delete_barang(barangId);
+        if (barang_status){
+            return new ResponseEntity<>(barang_status, HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(barang_status, HttpStatus.NO_CONTENT);
+        }
     }
 
     @PutMapping("/barang/edit/{userId}/{barangId}")

@@ -36,15 +36,31 @@ public class BarangService {
         return barangRepo.save(barang);
     }
 
-    public List<Barang> display_barang(){
+    public List<Barang> display_barang() {
         List<Barang> listBarang = barangRepo.findAll();
         return listBarang;
     }
 
-    public List<Barang> filter_barang(String tipeBarang) throws IOException{
 
+    public List<Barang> filter_barang(String tipeBarang) throws Exception {
         return barangRepo.findByTipeBarang(tipeBarang);
+    }
 
+    public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
+        Barang update = barangRepo.findByBarangId(barangId);
+        update.setHargaTawar(barangDto.getHargaTawar());
+        Barang barang =barangRepo.save(update);
+        return barang;
+    }
+
+    public boolean delete_barang(int barangId){
+        Barang barang = barangRepo.findByBarangId(barangId);
+        if (barang != null) {
+            barangRepo.deleteById(barangId);
+            return true;
+        }else {
+            return false;
+        }
 
     }
 
