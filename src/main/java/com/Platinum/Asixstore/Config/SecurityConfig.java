@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/registrasi",
                 "/swagger-ui.html/**","/refresh-token","/user/display").permitAll();
         http.authorizeRequests().antMatchers("/login/**").permitAll();
+
         http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
                 .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/daftar").hasAnyAuthority("BUYER");
         http.authorizeRequests().anyRequest().authenticated();

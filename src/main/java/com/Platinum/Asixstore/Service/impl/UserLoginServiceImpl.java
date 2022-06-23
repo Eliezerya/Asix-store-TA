@@ -29,7 +29,7 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
 
     private final Logger logger = LogManager.getLogger(UserLoginServiceImpl.class);
 
-    public User saveUser(User userLogin) {
+    public User saveUser(User userLogin) {//seller
         userLogin.setPassword(passwordEncoder.encode(userLogin.getPassword()));
         return userRepo.save(userLogin);
     }

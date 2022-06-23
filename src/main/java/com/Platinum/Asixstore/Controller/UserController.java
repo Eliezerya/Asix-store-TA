@@ -33,7 +33,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/registrasi")
+    @PostMapping("/registrasi")//seller
     public ResponseEntity<?> submit_user (@RequestBody User user ){
 //        Map <String, String> map = new HashMap<>();
         User userLogin = userLoginService.findByUsername(user.getEmail());
