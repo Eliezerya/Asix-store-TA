@@ -1,7 +1,9 @@
 package com.Platinum.Asixstore.Entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,7 +16,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
-    private long idRole;
+    private int idRole;
     @Column(name = "role_Name")
     private String roleName;
 }

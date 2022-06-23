@@ -1,5 +1,6 @@
 package com.Platinum.Asixstore.Dto;
 
+import com.Platinum.Asixstore.Entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ public class BarangDto {
     private int stock;
     private Long hargaBarang;
     private Long hargaTawar;
+    private User user;
 
 
 }

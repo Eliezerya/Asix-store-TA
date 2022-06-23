@@ -13,12 +13,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     UserRepo userRepo;
+
 
     public User display_userId(int userId) {
         return userRepo.findById(userId);
@@ -34,7 +34,6 @@ public class UserService {
 
     public void update_user(int userId, UserDto userDto) throws IOException {
         User user = userRepo.findById(userId);
-
         user.setNama(userDto.getNama());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -42,10 +41,12 @@ public class UserService {
         user.setNoTelepon(userDto.getNoTelepon());
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
-
         User updateUser = userRepo.save(user);
-
     }
+
+
+
+
 
 
 }
