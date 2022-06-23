@@ -17,11 +17,16 @@ public class BarangController {
     @Autowired
     BarangService barangService;
 
-    @PostMapping("/barang/daftar")
-    public ResponseEntity<?> submit_barang(BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
-        barangDto.setBarangImg(fileUpload);
-        Barang barang = barangService.submit_barang(barangDto);
-        return new ResponseEntity<>(barang, HttpStatus.CREATED);
+    @PostMapping("/barang/{userId}/daftar")
+    public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
+        if (userId == barangDto.getUserId()){
+            barangDto.setBarangImg(fileUpload);
+            Barang barang = barangService.submit_barang(userId,barangDto);
+            return new ResponseEntity<>(barang, HttpStatus.CREATED);
+        }else {
+            String error = "login error cok";
+            return new ResponseEntity<>(error,HttpStatus.ACCEPTED);
+        }
     }
 
     @GetMapping("/barang")
@@ -40,5 +45,25 @@ public class BarangController {
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId,BarangDto barangDto) {
         Barang barang = barangService.update_harga_tawar(barangId,barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/barang/delete/{barangId}")
+    public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId){
+        boolean barang_status = barangService.delete_barang(barangId);
+        if (barang_status){
+            return new ResponseEntity<>(barang_status, HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(barang_status, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PutMapping("/barang/edit/{userId}/{barangId}")
+    public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId,@PathVariable("userId") int userId, @RequestParam ("barangImg") MultipartFile fileUpload, BarangDto barangDto)throws  IOException{
+        barangDto.setBarangImg(fileUpload);
+        barangService.edit_barang(barangId, userId, barangDto);
+        Barang response = barangService.display_barang_byId(barangId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+
     }
 }

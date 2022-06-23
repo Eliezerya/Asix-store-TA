@@ -19,9 +19,10 @@ public class BarangService {
     @Autowired
     UserRepo userRepo;
 
-    public Barang submit_barang(BarangDto barangDto) throws IOException {
-        User user = new User();
+    public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
         Barang barang = new Barang();
+        User user = userRepo.findById(userId);
+        barangDto.setUserId(userId);
         barang.setUser(user);
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
@@ -30,7 +31,8 @@ public class BarangService {
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
         barang.setStock(barangDto.getStock());
         barang.setHargaBarang(barangDto.getHargaBarang());
-        barang.setHargaTawar(barangDto.getHargaTawar());
+        barang.setHargaTawar(barangDto.getHargaBarang());
+
         return barangRepo.save(barang);
     }
 
@@ -39,14 +41,45 @@ public class BarangService {
         return listBarang;
     }
 
+
     public List<Barang> filter_barang(String tipeBarang) throws Exception {
         return barangRepo.findByTipeBarang(tipeBarang);
     }
 
-    public Barang update_harga_tawar(int idBarang, BarangDto barangDto) {
-        Barang update = barangRepo.findByBarangId(idBarang);
+    public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
+        Barang update = barangRepo.findByBarangId(barangId);
         update.setHargaTawar(barangDto.getHargaTawar());
         Barang barang =barangRepo.save(update);
         return barang;
+    }
+
+    public boolean delete_barang(int barangId){
+        Barang barang = barangRepo.findByBarangId(barangId);
+        if (barang != null) {
+            barangRepo.deleteById(barangId);
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    public Barang display_barang_byId(int barangId) throws IOException{
+        return barangRepo.findByBarangId(barangId);
+    }
+
+    public void edit_barang(int barangId, int userId, BarangDto barangDto)throws IOException{
+            Barang barang = barangRepo.findByBarangId(barangId);
+            User user = userRepo.findById(userId);
+            barang.setUser(user);
+            barang.setMerk(barangDto.getMerk());
+            barang.setSeri(barangDto.getSeri());
+            barang.setDeskripsi(barangDto.getDeskripsi());
+            barang.setTipeBarang(barangDto.getTipeBarang());
+            barang.setBarangImg(barangDto.getBarangImg().getBytes());
+            barang.setHargaBarang(barangDto.getHargaBarang());
+            barang.setHargaTawar(barangDto.getHargaBarang());
+            barangRepo.save(barang);
+
     }
 }
