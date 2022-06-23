@@ -5,6 +5,8 @@ import com.Platinum.Asixstore.Entity.User;
 
 public interface UserLoginService {
     public User findByUsername(String username);
+    public User findByEmail(String email);
     public User saveUserBuyer(BuyerDto user);
     public User saveUserSeller(BuyerDto user);
+
 }

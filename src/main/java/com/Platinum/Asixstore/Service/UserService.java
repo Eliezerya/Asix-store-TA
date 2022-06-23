@@ -24,6 +24,10 @@ public class UserService {
         return userRepo.findById(userId);
     }
 
+    public User display_userEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
     public List<User> show_user() {
         return userRepo.findAll();
     }
@@ -31,7 +35,7 @@ public class UserService {
     public void update_user(int userId, UserDto userDto) throws IOException {
         User user = userRepo.findById(userId);
         user.setNama(userDto.getNama());
-//        user.setEmail(userDto.getEmail());
+        user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setAlamat(userDto.getAlamat());
         user.setNoTelepon(userDto.getNoTelepon());
