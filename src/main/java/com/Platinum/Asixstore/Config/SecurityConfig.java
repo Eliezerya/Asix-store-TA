@@ -30,16 +30,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-//    private CorsConfigurationSource configurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.addAllowedOrigin("*");
-//        config.addAllowedHeader(config.ALL);
-//        config.addAllowedHeader(config.ALL);
-//        config.addAllowedMethod(config.ALL);
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
+    private CorsConfigurationSource configurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader(config.ALL);
+        config.addAllowedHeader(config.ALL);
+        config.addAllowedMethod(config.ALL);
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,7 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/Buyer/registrasi","/Seller/registrasi",
                 "/swagger-ui.html/**","/refresh-token","/user/display").permitAll();
-        http.authorizeRequests().antMatchers("/login/**").permitAll();
+        http.cors().configurationSource(configurationSource()).and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure().and()
+                .authorizeRequests().antMatchers("/login/**").permitAll();
 
         http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
                 .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/daftar").hasAnyAuthority("BUYER");
