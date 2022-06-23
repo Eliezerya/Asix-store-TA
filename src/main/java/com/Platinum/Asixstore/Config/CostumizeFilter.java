@@ -35,7 +35,7 @@ public class CostumizeFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    @CrossOrigin(origins = "https://final-challenge-staging.herokuapp.com")
+    @CrossOrigin(origins = "https://final-challenge-staging.herokuapp.com/auth/login")
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username, password;
 
