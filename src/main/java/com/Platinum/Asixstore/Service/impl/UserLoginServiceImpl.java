@@ -39,6 +39,11 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
         return userRepo.findByEmail(email);
     }
 
+    public User findByEmail(String email) {
+
+        return userRepo.findByEmail(email);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(email);

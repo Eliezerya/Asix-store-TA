@@ -19,6 +19,10 @@ public class UserService {
         return userRepo.findById(userId);
     }
 
+    public User display_userEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
     public List<User> show_user() {
         return userRepo.findAll();
     }

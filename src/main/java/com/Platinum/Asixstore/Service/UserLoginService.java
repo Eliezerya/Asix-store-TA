@@ -6,4 +6,6 @@ public interface UserLoginService {
     public User findByUsername(String username);
     public User saveUser(User user);
 
+    public User findByEmail(String email);
+
 }
