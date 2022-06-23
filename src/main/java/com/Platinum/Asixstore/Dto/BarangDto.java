@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class BarangDto {
     private int barangId;
+    private int userId;
     private String merk;
     private String seri;
     private String deskripsi;

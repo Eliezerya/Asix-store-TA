@@ -19,9 +19,10 @@ public class BarangService {
     @Autowired
     UserRepo userRepo;
 
-    public Barang submit_barang(BarangDto barangDto) throws IOException {
-        User user = new User();
+    public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
         Barang barang = new Barang();
+        User user = userRepo.findById(userId);
+        barangDto.setUserId(userId);
         barang.setUser(user);
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
@@ -30,7 +31,8 @@ public class BarangService {
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
         barang.setStock(barangDto.getStock());
         barang.setHargaBarang(barangDto.getHargaBarang());
-        barang.setHargaTawar(barangDto.getHargaTawar());
+        barang.setHargaTawar(barangDto.getHargaBarang());
+
         return barangRepo.save(barang);
     }
 
@@ -38,6 +40,7 @@ public class BarangService {
         List<Barang> listBarang = barangRepo.findAll();
         return listBarang;
     }
+
 
     public List<Barang> filter_barang(String tipeBarang) throws Exception {
         return barangRepo.findByTipeBarang(tipeBarang);
@@ -58,6 +61,25 @@ public class BarangService {
         }else {
             return false;
         }
+
+    }
+
+    public Barang display_barang_byId(int barangId) throws IOException{
+        return barangRepo.findByBarangId(barangId);
+    }
+
+    public void edit_barang(int barangId, int userId, BarangDto barangDto)throws IOException{
+            Barang barang = barangRepo.findByBarangId(barangId);
+            User user = userRepo.findById(userId);
+            barang.setUser(user);
+            barang.setMerk(barangDto.getMerk());
+            barang.setSeri(barangDto.getSeri());
+            barang.setDeskripsi(barangDto.getDeskripsi());
+            barang.setTipeBarang(barangDto.getTipeBarang());
+            barang.setBarangImg(barangDto.getBarangImg().getBytes());
+            barang.setHargaBarang(barangDto.getHargaBarang());
+            barang.setHargaTawar(barangDto.getHargaBarang());
+            barangRepo.save(barang);
 
     }
 }

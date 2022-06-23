@@ -60,7 +60,6 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
     }
 
-
     @PostMapping("/Buyer/registrasi")
     public ResponseEntity<?> submit_user_buyer (@RequestBody BuyerDto buyerDto){
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
@@ -73,6 +72,7 @@ public class UserController {
     }
     @PostMapping("/Seller/registrasi")
     public ResponseEntity<?> submit_user_seller (@RequestBody BuyerDto buyerDto){
+
 //        Map <String, String> map = new HashMap<>();
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
         if (userLogin !=null){

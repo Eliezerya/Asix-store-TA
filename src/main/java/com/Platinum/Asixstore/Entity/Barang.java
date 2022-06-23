@@ -15,6 +15,9 @@ public class Barang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "barang_id")
     private int barangId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @Column(name = "merk")
     private String merk;
     @Column(name = "seri")
@@ -31,10 +34,10 @@ public class Barang {
     private Long hargaBarang;
     @Column(name = "harga_tawar")
     private Long hargaTawar;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 
 
 }
