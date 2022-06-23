@@ -30,23 +30,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-    private CorsConfigurationSource configurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedMethod(config.ALL);
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+//    private CorsConfigurationSource configurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader(config.ALL);
+//        config.addAllowedHeader(config.ALL);
+//        config.addAllowedMethod(config.ALL);
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().configurationSource(configurationSource()).and()
-                .requiresChannel()
-                .anyRequest()
-                .requiresSecure(); ;
+//        http.cors().configurationSource(configurationSource()).and()
+//                .requiresChannel()
+//                .anyRequest()
+//                .requiresSecure();
+
+        http.csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/Buyer/registrasi","/Seller/registrasi",

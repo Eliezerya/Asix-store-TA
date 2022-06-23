@@ -47,16 +47,7 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
         user.setEmail((buyerDto.getEmail()));
         return userRepo.save(user);
     }
-    public User saveUserSeller(BuyerDto buyerDto) {
-        User user = new User();
-        user.setPassword(passwordEncoder.encode(buyerDto.getPassword()));
-        //set role
-        List<Role> getRole = roleRepo.findByIdRole(2); //Seller
-        user.setRoles(getRole);
-        user.setNama((buyerDto.getNama()));
-        user.setEmail((buyerDto.getEmail()));
-        return userRepo.save(user);
-    }
+
 
     public User findByUsername(String email) {
         return userRepo.findByEmail(email);

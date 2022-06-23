@@ -26,18 +26,8 @@ public class UserController {
         return new ResponseEntity<>(userService.show_user(),HttpStatus.ACCEPTED);
     }
 
-   /* @PutMapping("/user/update/{userId}")
-    public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
-    {
-        userDto.setImg(fileUpload);
-        userService.update_user(userId,userDto);
-        User response = userService.display_userId(userId);
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }*/
-
-
     @PutMapping("/user/update/{userId}")
-    public ResponseEntity<?> update_user2(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
+    public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException
     {
         User userLogin = userLoginService.findByEmail(userDto.getEmail());
         if (userLogin !=null){
@@ -51,8 +41,6 @@ public class UserController {
         }
 
     }
-
-
 
     @GetMapping("/user/display/{email}")
     public ResponseEntity<?> user_display_byEmail(@PathVariable String email){
@@ -70,20 +58,5 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @PostMapping("/Seller/registrasi")
-    public ResponseEntity<?> submit_user_seller (@RequestBody BuyerDto buyerDto){
-
-//        Map <String, String> map = new HashMap<>();
-        User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
-        if (userLogin !=null){
-//            map.put(user.getUsername(), "username already exist");
-            return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
-        }else {
-            userLoginService.saveUserSeller(buyerDto);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
 
 }
