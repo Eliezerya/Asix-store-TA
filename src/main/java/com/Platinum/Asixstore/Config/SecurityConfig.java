@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
+    //uncomment if deploy to heroku
     private CorsConfigurationSource configurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -40,24 +41,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+    //uncomment if deploy to heroku
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().configurationSource(configurationSource()).and()
-//                .requiresChannel()
-//                .anyRequest()
-//                .requiresSecure();
-
+        //uncomment if deploy to heroku
+        http.cors().configurationSource(configurationSource()).and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
+        //uncomment if deploy to heroku
         http.csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/Buyer/registrasi","/Seller/registrasi",
                 "/swagger-ui.html/**","/refresh-token","/user/display").permitAll();
-        http.cors().configurationSource(configurationSource()).and()
-                .requiresChannel()
-                .anyRequest()
-                .requiresSecure().and()
-                .authorizeRequests().antMatchers("/login/**").permitAll();
+        http.authorizeRequests().antMatchers("/login/**").permitAll();
 
         http.authorizeRequests().antMatchers("/seller").hasAnyAuthority("SELLER")
                 .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/daftar").hasAnyAuthority("BUYER");
