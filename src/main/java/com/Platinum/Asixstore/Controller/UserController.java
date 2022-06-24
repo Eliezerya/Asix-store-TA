@@ -39,7 +39,6 @@ public class UserController {
             User response = userService.display_userId(userId);
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         }
-
     }
 
     @GetMapping("/user/display/{email}")
@@ -58,5 +57,4 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 }
