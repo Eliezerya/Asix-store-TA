@@ -15,19 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final PasswordEncoder passwordEncoder;
-
     @Autowired
     UserRepo userRepo;
-
-
     public User display_userId(int userId) {
         return userRepo.findById(userId);
     }
-
     public User display_userEmail(String email) {
         return userRepo.findByEmail(email);
     }
-
     public List<User> show_user() {
         return userRepo.findAll();
     }

@@ -28,7 +28,6 @@ public class BarangController {
             return new ResponseEntity<>(error,HttpStatus.ACCEPTED);
         }
     }
-
     @GetMapping("/barang")
     public ResponseEntity<?> display_barang() {
         List<Barang> barangs = barangService.display_barang();
@@ -40,13 +39,11 @@ public class BarangController {
         List<Barang> barangFilter = barangService.filter_barang(tipeBarang);
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
-
     @PutMapping("/barang/update/{barangId}")
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId,BarangDto barangDto) {
         Barang barang = barangService.update_harga_tawar(barangId,barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
     }
-
     @DeleteMapping("/barang/delete/{barangId}")
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId){
         boolean barang_status = barangService.delete_barang(barangId);
@@ -56,13 +53,11 @@ public class BarangController {
             return new ResponseEntity<>(barang_status, HttpStatus.NO_CONTENT);
         }
     }
-
     @PutMapping("/barang/update/{userId}/{barangId}")
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId,@PathVariable("userId") int userId, @RequestParam ("barangImg") MultipartFile fileUpload, BarangDto barangDto)throws  IOException{
         barangDto.setBarangImg(fileUpload);
         barangService.edit_barang(barangId, userId, barangDto);
         Barang response = barangService.display_barang_byId(barangId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
-
     }
 }

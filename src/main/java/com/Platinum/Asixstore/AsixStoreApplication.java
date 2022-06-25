@@ -16,21 +16,6 @@ public class AsixStoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AsixStoreApplication.class, args);
 	}
-//	@Bean
-//
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/**")
-//						.allowedMethods(CorsConfiguration.ALL)
-//						.allowedHeaders(CorsConfiguration.ALL)
-//						.allowedOriginPatterns(CorsConfiguration.ALL).allowedOrigins("*");
-//
-////				registry.addMapping("/**").allowedMethods("POST").allowedOrigins("http://localhost:3000");
-//			}
-//		};
-//	}
 
 	@Bean
 	PasswordEncoder passwordEncoder(){
