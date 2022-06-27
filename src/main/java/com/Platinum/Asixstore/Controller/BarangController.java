@@ -2,10 +2,15 @@ package com.Platinum.Asixstore.Controller;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
+import com.Platinum.Asixstore.Entity.User;
+import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.BarangService;
+import net.bytebuddy.utility.nullability.AlwaysNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,17 +21,28 @@ import java.util.List;
 public class BarangController {
     @Autowired
     BarangService barangService;
-
+    @Autowired
+    UserRepo userRepo;
+    public Authentication authentication(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth;
+    }
     @PostMapping("/barang/{userId}/daftar")
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
-        if (userId == barangDto.getUserId()){
-            barangDto.setBarangImg(fileUpload);
-            Barang barang = barangService.submit_barang(userId,barangDto);
-            return new ResponseEntity<>(barang, HttpStatus.CREATED);
+        User userToken = userRepo.findById(userId);
+        if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())){
+            if (userId == barangDto.getUserId()){
+                barangDto.setBarangImg(fileUpload);
+                Barang barang = barangService.submit_barang(userId,barangDto);
+                return new ResponseEntity<>(barang, HttpStatus.CREATED);
+            }else {
+                String error = "login error cok";
+                return new ResponseEntity<>(error,HttpStatus.ACCEPTED);
+            }
         }else {
-            String error = "login error cok";
-            return new ResponseEntity<>(error,HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
     }
     @GetMapping("/barang")
     public ResponseEntity<?> display_barang() {
