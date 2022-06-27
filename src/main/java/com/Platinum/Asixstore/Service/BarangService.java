@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
@@ -36,9 +37,11 @@ public class BarangService {
         return barangRepo.save(barang);
     }
 
+
+
     public List<Barang> display_barang() {
-        List<Barang> listBarang = barangRepo.findAll();
-        return listBarang;
+
+        return barangRepo.findAll();
     }
 
 
@@ -80,6 +83,5 @@ public class BarangService {
             barang.setHargaBarang(barangDto.getHargaBarang());
             barang.setHargaTawar(barangDto.getHargaBarang());
             barangRepo.save(barang);
-
     }
 }

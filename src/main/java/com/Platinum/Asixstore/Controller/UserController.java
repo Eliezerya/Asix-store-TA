@@ -14,10 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
 @RestController
+@Transactional
 public class UserController {
     @Autowired
     UserService userService;
@@ -56,8 +58,14 @@ public class UserController {
     }
     @GetMapping("/user/display/{email}")
     public ResponseEntity<?> user_display_byEmail(@PathVariable String email) {
-        User users = userService.display_userEmail(email);
-        return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
+        if (userService.display_userEmail(email) != null){
+            User users = userService.display_userEmail(email);
+            return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
     }
 
     @PostMapping("/Buyer/registrasi")
