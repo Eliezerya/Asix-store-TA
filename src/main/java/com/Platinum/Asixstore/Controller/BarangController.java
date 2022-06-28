@@ -60,6 +60,7 @@ public class BarangController {
 
     @PutMapping("/barang/update/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
+
         Barang barang = barangService.update_harga_tawar(barangId, barangDto);
         return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
     }
