@@ -24,6 +24,8 @@ import java.util.Locale;
 @RestController
 @Transactional
 public class BarangController {
+    //tesdoang
+
     @Autowired
     BarangService barangService;
     @Autowired
@@ -49,7 +51,6 @@ public class BarangController {
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        //tesdoang
     }
 
     @GetMapping("/barang") //tampilkan semua barang
@@ -63,11 +64,14 @@ public class BarangController {
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/barang/update/{barangId}") // tawar barang untuk buyer
+    @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
-
-        Barang barang = barangService.update_harga_tawar(barangId, barangDto);
-        return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
+            return new ResponseEntity<>("Anda tidak dapat membeli barang sendiri", HttpStatus.FORBIDDEN);
+        }else {
+            Barang barang = barangService.update_harga_tawar(barangId, barangDto);
+            return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
+        }
     }
 
     @DeleteMapping("barang/delete/{barangId}") //delete barang
