@@ -40,7 +40,6 @@ public class BarangController {
         return auth;
     }
 
-
     @PostMapping("/barang/{userId}/daftar") //Submit barang
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
