@@ -60,7 +60,7 @@ public class BarangController {
 
     @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET) // kategori gitar dan aksesoris
     public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
-        List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang);
+        List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang.toUpperCase(Locale.ROOT));
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 

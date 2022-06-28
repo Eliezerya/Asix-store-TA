@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class BarangService {
@@ -28,7 +29,7 @@ public class BarangService {
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
         barang.setDeskripsi(barangDto.getDeskripsi());
-        barang.setTipeBarang(barangDto.getTipeBarang());
+        barang.setTipeBarang(barangDto.getTipeBarang().toUpperCase(Locale.ROOT));
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
         barang.setStock(barangDto.getStock());
         barang.setHargaBarang(barangDto.getHargaBarang());
