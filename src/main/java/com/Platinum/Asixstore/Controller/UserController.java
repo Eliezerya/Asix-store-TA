@@ -50,10 +50,10 @@ public class UserController {
                 userDto.setImg(fileUpload);
                 userService.update_user(userId, userDto);
                 userService.display_userId(userId);
+                return new ResponseEntity<>("Update Profile Berhasil,\nAnda bisa menjual barang",HttpStatus.ACCEPTED);
             }else{
                 return new ResponseEntity<>("blok",HttpStatus.BAD_GATEWAY);
             }
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
     @GetMapping("/user/display/{email}")
@@ -65,7 +65,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
-
     }
 
     @PostMapping("/Buyer/registrasi")
@@ -75,7 +74,8 @@ public class UserController {
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         } else {
             userLoginService.saveUserBuyer(buyerDto);
+            return new ResponseEntity<>("Registrasi Berhasil",HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }

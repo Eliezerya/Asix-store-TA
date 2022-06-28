@@ -42,7 +42,6 @@ public class CostumizeFilter extends UsernamePasswordAuthenticationFilter {
             Map<String, String> mapRequest = new ObjectMapper().readValue(request.getInputStream(), Map.class);
             username = mapRequest.get("email");
             password = mapRequest.get("password");
-
         } catch (IOException io) {
             throw new AuthenticationServiceException(io.getMessage());
         }

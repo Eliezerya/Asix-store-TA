@@ -1,7 +1,9 @@
 package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.UserDto;
+import com.Platinum.Asixstore.Entity.Role;
 import com.Platinum.Asixstore.Entity.User;
+import com.Platinum.Asixstore.Repository.RoleRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    RoleRepo roleRepo;
     public User display_userId(int userId) {
         return userRepo.findById(userId);
     }
@@ -36,8 +40,16 @@ public class UserService {
         user.setNoTelepon(userDto.getNoTelepon());
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
+        List<Role> getRole = roleRepo.findByIdRole(2); //Seller
+        user.setRoles(getRole);
         User updateUser = userRepo.save(user);
     }
+
+    public void update_role(int userId, UserDto userDto) throws IOException {
+        User user = userRepo.findById(userId);
+
+    }
+
 
 
 
