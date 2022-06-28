@@ -35,8 +35,6 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
     private final PasswordEncoder passwordEncoder;
 
     private final Logger logger = LogManager.getLogger(UserLoginServiceImpl.class);
-
-
     public User saveUserBuyer(BuyerDto buyerDto) {
         User user = new User();
         user.setPassword(passwordEncoder.encode(buyerDto.getPassword()));
@@ -47,7 +45,6 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
         user.setEmail((buyerDto.getEmail()));
         return userRepo.save(user);
     }
-
 
     public User findByUsername(String email) {
         return userRepo.findByEmail(email);

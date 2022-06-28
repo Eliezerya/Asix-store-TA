@@ -40,7 +40,6 @@ public class BarangService {
 
 
     public List<Barang> display_barang() {
-
         return barangRepo.findAll();
     }
 
