@@ -49,6 +49,7 @@ public class BarangController {
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        //tesdoang
     }
 
     @GetMapping("/barang") //tampilkan semua barang
