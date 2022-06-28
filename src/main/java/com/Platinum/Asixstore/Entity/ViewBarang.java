@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "view_barang")
-public class viewBarang {
+public class ViewBarang {
     @Id
     @Column(name = "barang_id")
     private int barangId;

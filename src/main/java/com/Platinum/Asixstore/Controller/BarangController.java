@@ -3,9 +3,11 @@ package com.Platinum.Asixstore.Controller;
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
 import com.Platinum.Asixstore.Entity.User;
+import com.Platinum.Asixstore.Entity.ViewBarang;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.BarangService;
+import com.Platinum.Asixstore.Service.ViewBarangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,8 @@ public class BarangController {
     UserRepo userRepo;
     @Autowired
     BarangRepo barangRepo;
+    @Autowired
+    ViewBarangService viewBarangService;
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,12 +53,12 @@ public class BarangController {
 
     @GetMapping("/barang") //tampilkan semua barang
     public ResponseEntity<?> display_barang() {
-        return new ResponseEntity<>(barangService.display_barang(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(viewBarangService.view_semua_barang(), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET) // kategori gitar dan aksesoris
     public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
-        List<Barang> barangFilter = barangService.filter_barang(tipeBarang.toLowerCase(Locale.ROOT));
+        List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang);
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 

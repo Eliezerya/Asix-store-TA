@@ -38,16 +38,6 @@ public class BarangService {
     }
 
 
-
-    public List<Barang> display_barang() {
-        return barangRepo.findAll();
-    }
-
-
-    public List<Barang> filter_barang(String tipeBarang) throws Exception {
-        return barangRepo.findByTipeBarang(tipeBarang);
-    }
-
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang update = barangRepo.findByBarangId(barangId);
         update.setHargaTawar(barangDto.getHargaTawar());
@@ -63,7 +53,6 @@ public class BarangService {
         }else {
             return false;
         }
-
     }
 
     public Barang display_barang_byId(int barangId) throws IOException{
