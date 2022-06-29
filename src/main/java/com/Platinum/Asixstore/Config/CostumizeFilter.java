@@ -68,6 +68,7 @@ public class CostumizeFilter extends UsernamePasswordAuthenticationFilter {
         Map <String, String> map = new HashMap<>();
         map.put("access_token", accessToken);
         map.put("refresh_token", resreshToken);
+        map.put("email", user.getUsername());
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), map);
     }
