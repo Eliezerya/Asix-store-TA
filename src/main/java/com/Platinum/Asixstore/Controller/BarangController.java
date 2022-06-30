@@ -71,7 +71,7 @@ public class BarangController {
             return new ResponseEntity<>("Anda tidak dapat membeli barang sendiri", HttpStatus.FORBIDDEN);
         }else {
             Barang barang = barangService.update_harga_tawar(barangId, barangDto);
-            return new ResponseEntity<>(barang, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("barang telah ditawar", HttpStatus.ACCEPTED);
         }
     }
 

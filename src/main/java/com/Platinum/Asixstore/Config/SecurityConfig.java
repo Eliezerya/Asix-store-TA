@@ -67,7 +67,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and().authorizeRequests().antMatchers("/user/update/{userId}").hasAnyAuthority("BUYER");
 
-
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya
         http.addFilterBefore(new CostumizeAuthorFilter(), UsernamePasswordAuthenticationFilter.class);
