@@ -34,12 +34,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/display")
+    @GetMapping("/user/display") // view all user
     public ResponseEntity<?> display_user() {
         return new ResponseEntity<>(userService.show_user(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/user/update/{userId}")
+    @PutMapping("/user/update/{userId}") // update user
     public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException {
         User user = userLoginService.findByEmail(userDto.getEmail());
         User userToken = userRepo.findById(userId);
@@ -56,6 +56,7 @@ public class UserController {
             }
         }
     }
+
     @PutMapping("/user/updateRole/{userId}")
     public ResponseEntity<?> update_role(@PathVariable("userId") int userId, UserDto userDto) throws IOException {
         User user = userLoginService.findByEmail(userDto.getEmail());
@@ -73,7 +74,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/display/{email}")
+    @GetMapping("/user/display/{email}") // view user by email
     public ResponseEntity<?> user_display_byEmail(@PathVariable String email) {
         if (userService.display_userEmail(email) != null){
             User users = userService.display_userEmail(email);
@@ -84,7 +85,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/Buyer/registrasi")
+    @PostMapping("/Buyer/registrasi") //register
     public ResponseEntity<?> submit_user_buyer(@RequestBody BuyerDto buyerDto) {
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
         if (userLogin != null) {

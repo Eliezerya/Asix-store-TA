@@ -40,7 +40,7 @@ public class BarangController {
         return auth;
     }
 
-    @PostMapping("/barang/{userId}/daftar") //Submit barang
+    @PostMapping("/barang/{userId}/daftar") // barang daftar
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
@@ -51,12 +51,10 @@ public class BarangController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
-
     @GetMapping("/barang") //tampilkan semua barang
     public ResponseEntity<?> display_barang() {
         return new ResponseEntity<>(viewBarangService.view_semua_barang(), HttpStatus.ACCEPTED);
     }
-
     @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET) // kategori gitar dan aksesoris
     public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
         List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang.toUpperCase(Locale.ROOT));
@@ -90,7 +88,7 @@ public class BarangController {
         }
     }
 
-    @PutMapping("/barang/update/{userId}/{barangId}") //
+    @PutMapping("/barang/update/{userId}/{barangId}") // update isi barang
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId, @RequestParam("barangImg") MultipartFile fileUpload, BarangDto barangDto) throws IOException {
         barangDto.setBarangImg(fileUpload);
         barangService.edit_barang(barangId, userId, barangDto);
