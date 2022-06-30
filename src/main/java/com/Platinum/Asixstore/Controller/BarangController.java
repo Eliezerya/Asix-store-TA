@@ -2,9 +2,11 @@ package com.Platinum.Asixstore.Controller;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
+import com.Platinum.Asixstore.Entity.Status;
 import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Entity.ViewBarang;
 import com.Platinum.Asixstore.Repository.BarangRepo;
+import com.Platinum.Asixstore.Repository.StatusRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.BarangService;
 import com.Platinum.Asixstore.Service.ViewBarangService;
@@ -35,6 +37,8 @@ public class BarangController {
     @Autowired
     ViewBarangService viewBarangService;
 
+    @Autowired
+    StatusRepo statusRepo;
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
