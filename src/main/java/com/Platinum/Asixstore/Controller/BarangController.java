@@ -94,9 +94,14 @@ public class BarangController {
 
     @PutMapping("/barang/update/{userId}/{barangId}") // update isi barang
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId, @RequestParam("barangImg") MultipartFile fileUpload, BarangDto barangDto) throws IOException {
-        barangDto.setBarangImg(fileUpload);
-        barangService.edit_barang(barangId, userId, barangDto);
-        Barang response = barangService.display_barang_byId(barangId);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        Barang barang = barangRepo.findByBarangId(barangId);
+
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(barang.getUser().getEmail())) {
+            barangDto.setBarangImg(fileUpload);
+            barangService.edit_barang(barangId, userId, barangDto);
+            return new ResponseEntity<>("Barang telah di update",HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }
