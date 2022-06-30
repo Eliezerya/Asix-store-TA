@@ -18,6 +18,8 @@ public class ViewBarang {
     private byte[] barangImg;
     @Column(name = "deskripsi")
     private String deskripsi;
+    @Column(name = "status_barang")
+    private String statusBarang;
     @Column(name = "tipe_barang")
     private String tipeBarang;
     @Column(name = "harga_barang")
