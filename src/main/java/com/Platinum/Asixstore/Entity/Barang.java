@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import javax.transaction.Transactional;
+import java.util.Date;
+
 
 @Entity
 @Setter
@@ -33,13 +36,17 @@ public class Barang {
     private Long hargaBarang;
     @Column(name = "harga_tawar")
     private Long hargaTawar;
+
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "status_master",
             joinColumns = @JoinColumn(name = "barang_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private List<Status> status;
 
-
+    @Column(name = "created_at")
+    private Date createdAt;
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
 
 }

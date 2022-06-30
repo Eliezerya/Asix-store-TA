@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,6 +43,8 @@ public class BarangService {
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
         barang.setHargaBarang(barangDto.getHargaBarang());
         barang.setHargaTawar(barangDto.getHargaBarang());
+        barang.setCreatedAt(new Date());
+
 
         return barangRepo.save(barang);
     }
@@ -52,6 +55,7 @@ public class BarangService {
         update.setHargaTawar(barangDto.getHargaTawar());
         List<Status> getStatus = statusRepo.findByStatusId(3);
         update.setStatus(getStatus);
+        update.setUpdatedAt(new Date());
         Barang barang =barangRepo.save(update);
         return barang;
     }

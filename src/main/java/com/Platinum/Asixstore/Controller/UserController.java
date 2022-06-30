@@ -34,12 +34,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/display")
+    @GetMapping("/user/display") // view all user
     public ResponseEntity<?> display_user() {
         return new ResponseEntity<>(userService.show_user(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/user/update/{userId}")
+    @PutMapping("/user/update/{userId}") // update user
     public ResponseEntity<?> update_user(@PathVariable("userId") int userId, @RequestParam("img") MultipartFile fileUpload, UserDto userDto) throws IOException {
         User user = userLoginService.findByEmail(userDto.getEmail());
         User userToken = userRepo.findById(userId);
@@ -50,14 +50,32 @@ public class UserController {
                 userDto.setImg(fileUpload);
                 userService.update_user(userId, userDto);
                 userService.display_userId(userId);
-                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+                return new ResponseEntity<>("Update Profile Berhasil",HttpStatus.ACCEPTED);
             }else{
                 return new ResponseEntity<>("blok",HttpStatus.BAD_GATEWAY);
             }
-
         }
     }
-    @GetMapping("/user/display/{email}")
+
+    @PutMapping("/user/updateRole/{userId}")
+    public ResponseEntity<?> update_role(@PathVariable("userId") int userId, UserDto userDto) throws IOException {
+        User user = userLoginService.findByEmail(userDto.getEmail());
+        User userToken = userRepo.findById(userId);
+        if (user != null) {
+            return new ResponseEntity<>("BLOK",HttpStatus.BAD_REQUEST);
+        } else {
+            if(userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())){
+                userService.update_role(userId);
+                userService.display_userId(userId);
+                return new ResponseEntity<>("Update Seller telah berhasil,\nAnda bisa menjual barang",HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>("blok",HttpStatus.BAD_GATEWAY);
+            }
+        }
+    }
+
+    @GetMapping("/user/display/{email}") // view user by email
     public ResponseEntity<?> user_display_byEmail(@PathVariable String email) {
         if (userService.display_userEmail(email) != null){
             User users = userService.display_userEmail(email);
@@ -66,17 +84,17 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
-
     }
 
-    @PostMapping("/Buyer/registrasi")
+    @PostMapping("/Buyer/registrasi") //register
     public ResponseEntity<?> submit_user_buyer(@RequestBody BuyerDto buyerDto) {
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
         if (userLogin != null) {
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         } else {
             userLoginService.saveUserBuyer(buyerDto);
+            return new ResponseEntity<>("Registrasi Berhasil",HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }
