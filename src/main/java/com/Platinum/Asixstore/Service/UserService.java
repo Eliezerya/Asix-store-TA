@@ -34,8 +34,8 @@ public class UserService {
     public void update_user(int userId, UserDto userDto) throws IOException {
         User user = userRepo.findById(userId);
         user.setNama(userDto.getNama());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        user.setEmail(userDto.getEmail());
+//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setAlamat(userDto.getAlamat());
         user.setNoTelepon(userDto.getNoTelepon());
         user.setKota(userDto.getKota());

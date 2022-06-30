@@ -51,12 +51,10 @@ public class BarangController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
-
     @GetMapping("/barang") //tampilkan semua barang
     public ResponseEntity<?> display_barang() {
         return new ResponseEntity<>(viewBarangService.view_semua_barang(), HttpStatus.ACCEPTED);
     }
-
     @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET) // kategori gitar dan aksesoris
     public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
         List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang.toUpperCase(Locale.ROOT));

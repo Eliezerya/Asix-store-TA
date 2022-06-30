@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Entity
 @Setter
@@ -35,4 +36,9 @@ public class Barang {
     private Long hargaBarang;
     @Column(name = "harga_tawar")
     private Long hargaTawar;
+    @Column(name = "created_at")
+    private Date createdAt;
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
 }
