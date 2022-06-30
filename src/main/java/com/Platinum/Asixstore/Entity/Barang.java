@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Entity
 @Setter
@@ -29,10 +29,17 @@ public class Barang {
     private String tipeBarang;
     @Lob
     private byte[] barangImg;
-    @Column(name="stock")
-    private int stock;
     @Column(name = "harga_barang")
     private Long hargaBarang;
     @Column(name = "harga_tawar")
     private Long hargaTawar;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "status_master",
+            joinColumns = @JoinColumn(name = "barang_id"),
+            inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private List<Status> status;
+
+
+
+
 }

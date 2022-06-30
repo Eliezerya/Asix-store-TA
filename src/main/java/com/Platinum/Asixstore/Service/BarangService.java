@@ -2,8 +2,10 @@ package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
+import com.Platinum.Asixstore.Entity.Status;
 import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Repository.BarangRepo;
+import com.Platinum.Asixstore.Repository.StatusRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +23,23 @@ public class BarangService {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    StatusRepo statusRepo;
+
     public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
+
+
         Barang barang = new Barang();
         User user = userRepo.findById(userId);
         barangDto.setUserId(userId);
         barang.setUser(user);
+        List<Status> getStatus = statusRepo.findByStatusId(1);
+        barang.setStatus(getStatus);
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
         barang.setDeskripsi(barangDto.getDeskripsi());
         barang.setTipeBarang(barangDto.getTipeBarang().toUpperCase(Locale.ROOT));
         barang.setBarangImg(barangDto.getBarangImg().getBytes());
-        barang.setStock(barangDto.getStock());
         barang.setHargaBarang(barangDto.getHargaBarang());
         barang.setHargaTawar(barangDto.getHargaBarang());
 
@@ -42,6 +50,8 @@ public class BarangService {
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang update = barangRepo.findByBarangId(barangId);
         update.setHargaTawar(barangDto.getHargaTawar());
+        List<Status> getStatus = statusRepo.findByStatusId(3);
+        update.setStatus(getStatus);
         Barang barang =barangRepo.save(update);
         return barang;
     }
