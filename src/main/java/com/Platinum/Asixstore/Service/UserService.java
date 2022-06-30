@@ -40,13 +40,14 @@ public class UserService {
         user.setNoTelepon(userDto.getNoTelepon());
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
-        List<Role> getRole = roleRepo.findByIdRole(2); //Seller
-        user.setRoles(getRole);
-        User updateUser = userRepo.save(user);
+        userRepo.save(user);
     }
 
-    public void update_role(int userId, UserDto userDto) throws IOException {
+    public void update_role(int userId) throws IOException {
         User user = userRepo.findById(userId);
+        List<Role> getRole = roleRepo.findByIdRole(2); //Seller
+        user.setRoles(getRole);
+        userRepo.save(user);
 
     }
 

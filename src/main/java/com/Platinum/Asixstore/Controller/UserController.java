@@ -50,12 +50,30 @@ public class UserController {
                 userDto.setImg(fileUpload);
                 userService.update_user(userId, userDto);
                 userService.display_userId(userId);
-                return new ResponseEntity<>("Update Profile Berhasil,\nAnda bisa menjual barang",HttpStatus.ACCEPTED);
+                return new ResponseEntity<>("Update Profile Berhasil",HttpStatus.ACCEPTED);
             }else{
                 return new ResponseEntity<>("blok",HttpStatus.BAD_GATEWAY);
             }
         }
     }
+
+    @PutMapping("/user/updateRole/{userId}")
+    public ResponseEntity<?> update_role(@PathVariable("userId") int userId, UserDto userDto) throws IOException {
+        User user = userLoginService.findByEmail(userDto.getEmail());
+        User userToken = userRepo.findById(userId);
+        if (user != null) {
+            return new ResponseEntity<>("BLOK",HttpStatus.BAD_REQUEST);
+        } else {
+            if(userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())){
+                userService.update_role(userId);
+                userService.display_userId(userId);
+                return new ResponseEntity<>("Update Seller telah berhasil,\nAnda bisa menjual barang",HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>("blok",HttpStatus.BAD_GATEWAY);
+            }
+        }
+    }
+
     @GetMapping("/user/display/{email}") // view user by email
     public ResponseEntity<?> user_display_byEmail(@PathVariable String email) {
         if (userService.display_userEmail(email) != null){
