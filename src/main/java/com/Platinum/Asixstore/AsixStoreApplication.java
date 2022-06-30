@@ -16,7 +16,6 @@ public class AsixStoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AsixStoreApplication.class, args);
 	}
-
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();

@@ -57,7 +57,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/updateRole/{userId}")
+    @PutMapping("/user/update-role/{userId}")
     public ResponseEntity<?> update_role(@PathVariable("userId") int userId, UserDto userDto) throws IOException {
         User user = userLoginService.findByEmail(userDto.getEmail());
         User userToken = userRepo.findById(userId);
