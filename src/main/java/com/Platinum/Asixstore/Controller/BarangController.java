@@ -40,7 +40,7 @@ public class BarangController {
         return auth;
     }
 
-    @PostMapping("/barang/{userId}/daftar") //Submit barang
+    @PostMapping("/barang/{userId}/daftar") // barang daftar
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
@@ -88,7 +88,7 @@ public class BarangController {
         }
     }
 
-    @PutMapping("/barang/update/{userId}/{barangId}") //
+    @PutMapping("/barang/update/{userId}/{barangId}") // update isi barang
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId, @RequestParam("barangImg") MultipartFile fileUpload, BarangDto barangDto) throws IOException {
         barangDto.setBarangImg(fileUpload);
         barangService.edit_barang(barangId, userId, barangDto);
