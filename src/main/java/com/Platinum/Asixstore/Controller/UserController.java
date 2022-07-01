@@ -82,7 +82,6 @@ public class UserController {
             return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         }
     }
 
