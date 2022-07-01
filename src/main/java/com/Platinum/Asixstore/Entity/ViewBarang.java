@@ -30,4 +30,8 @@ public class ViewBarang {
     private String emailSeller;
     @Column(name = "kota")
     private String kota;
+    @Column(name = "merk")
+    private String merk;
+    @Column(name = "seri")
+    private String seri;
 }
