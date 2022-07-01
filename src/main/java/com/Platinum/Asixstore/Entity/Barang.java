@@ -43,10 +43,12 @@ public class    Barang {
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private List<Status> status;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "user_id_buyer", nullable = true)
+    private User Buyer;
+
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "updated_at")
     private Date updatedAt;
-
-
 }

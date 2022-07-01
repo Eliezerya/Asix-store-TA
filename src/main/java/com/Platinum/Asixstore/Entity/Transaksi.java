@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 public class Transaksi {
+
     @Id
     @Column(name = "transaksi_id")
     private int transaksiId;

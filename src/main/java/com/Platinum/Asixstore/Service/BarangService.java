@@ -9,6 +9,8 @@ import com.Platinum.Asixstore.Repository.StatusRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,6 +28,10 @@ public class BarangService {
 
     @Autowired
     StatusRepo statusRepo;
+    public Authentication authentication() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth;
+    }
 
     public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
 
@@ -52,10 +58,14 @@ public class BarangService {
 
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang update = barangRepo.findByBarangId(barangId);
+
+        User Buyer = userRepo.findByEmail(authentication().getPrincipal().toString());
+
         update.setHargaTawar(barangDto.getHargaTawar());
         List<Status> getStatus = statusRepo.findByStatusId(3);
         update.setStatus(getStatus);
         update.setUpdatedAt(new Date());
+        update.setBuyer(Buyer);
         Barang barang =barangRepo.save(update);
         return barang;
     }

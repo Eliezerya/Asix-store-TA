@@ -22,6 +22,7 @@ public class BarangDto {
     private Long hargaTawar;
     private User user;
     private List<Status> status;
+    private User userBuyer;
 
 
 }
