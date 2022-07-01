@@ -42,6 +42,7 @@ public class BarangService {
         barang.setUser(user);
         List<Status> getStatus = statusRepo.findByStatusId(1);
         barang.setStatus(getStatus);
+        barang.setNamaBarang(barangDto.getNamaBarang());
         barang.setMerk(barangDto.getMerk());
         barang.setSeri(barangDto.getSeri());
         barang.setDeskripsi(barangDto.getDeskripsi());

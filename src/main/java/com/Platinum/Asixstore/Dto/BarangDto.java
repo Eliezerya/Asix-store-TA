@@ -13,6 +13,7 @@ import java.util.List;
 public class BarangDto {
     private int barangId;
     private int userId;
+    private String namaBarang;
     private String merk;
     private String seri;
     private String deskripsi;

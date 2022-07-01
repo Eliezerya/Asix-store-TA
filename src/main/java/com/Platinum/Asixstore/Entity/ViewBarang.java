@@ -16,6 +16,8 @@ public class ViewBarang {
     @Lob
     @Column(name = "barang_img")
     private byte[] barangImg;
+    @Column(name = "nama_barang")
+    private String namaBarang;
     @Column(name = "deskripsi")
     private String deskripsi;
     @Column(name = "status_barang")

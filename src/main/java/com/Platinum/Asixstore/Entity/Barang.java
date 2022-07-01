@@ -22,6 +22,8 @@ public class    Barang {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @Column(name = "nama_barang")
+    private String namaBarang;
     @Column(name = "merk")
     private String merk;
     @Column(name = "seri")
