@@ -12,8 +12,6 @@ import java.util.List;
 public class UserDto {
     private int userId;
     private String nama;
-    private String email;
-    private String password;
     private String alamat;
     private long noTelepon;
     private String kota;

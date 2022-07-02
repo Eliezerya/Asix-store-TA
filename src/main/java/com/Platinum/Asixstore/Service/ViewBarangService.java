@@ -14,10 +14,15 @@ public class ViewBarangService {
     @Autowired
     ViewBarangRepo viewBarangRepo;
 
+
     public List<ViewBarang> view_semua_barang(){
         return viewBarangRepo.findAll();
     }
     public List<ViewBarang> filter_barang(String tipeBarang) throws Exception {
         return viewBarangRepo.findByTipeBarang(tipeBarang);
+    }
+
+    public ViewBarang view_barang_by_id(int barangId){
+        return viewBarangRepo.findByBarangId(barangId);
     }
 }

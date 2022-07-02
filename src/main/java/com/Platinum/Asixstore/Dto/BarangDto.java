@@ -1,5 +1,6 @@
 package com.Platinum.Asixstore.Dto;
 
+import com.Platinum.Asixstore.Entity.Role;
 import com.Platinum.Asixstore.Entity.Status;
 import com.Platinum.Asixstore.Entity.User;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class BarangDto {
     private Long hargaTawar;
     private User user;
     private List<Status> status;
-    private User userBuyer;
+    private Role roleId;
 
 
 }

@@ -1,5 +1,6 @@
 package com.Platinum.Asixstore.Repository;
 
+import com.Platinum.Asixstore.Entity.Barang;
 import com.Platinum.Asixstore.Entity.ViewBarang;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface ViewBarangRepo extends JpaRepository<ViewBarang, Integer> {
     List<ViewBarang> findAll();
     List<ViewBarang> findByTipeBarang(String tipebarang);
+
+    ViewBarang findByBarangId(int barangId);
 }

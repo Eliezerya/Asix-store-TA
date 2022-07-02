@@ -44,7 +44,7 @@ public class BarangController {
         return auth;
     }
 
-    @PostMapping("/barang/{userId}/daftar") // barang daftar
+    @PostMapping("/barang/{userId}/daftar") // barang submit
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
@@ -75,7 +75,7 @@ public class BarangController {
         }
     }
 
-    @DeleteMapping("barang/delete/{barangId}") //delete barang
+    @RequestMapping("barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
         User user = userRepo.findById(barang.getUser().getUserId());
@@ -104,4 +104,11 @@ public class BarangController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
+    public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{
+        ViewBarang viewBarang = viewBarangService.view_barang_by_id(barangId);
+        return new ResponseEntity<>(viewBarang, HttpStatus.ACCEPTED);
+    }
+
 }

@@ -28,8 +28,8 @@ public class ViewBarang {
     private long hargaBarang;
     @Column(name = "no_telepon")
     private long noTelepon;
-    @Column(name = "email_seller")
-    private String emailSeller;
+    @Column(name = "nama_seller")
+    private String namaSeller;
     @Column(name = "kota")
     private String kota;
     @Column(name = "merk")
