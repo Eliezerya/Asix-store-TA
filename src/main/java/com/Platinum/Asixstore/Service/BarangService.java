@@ -64,13 +64,10 @@ public class BarangService {
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang update = barangRepo.findByBarangId(barangId);
 
-//        Role role = roleRepo.findByIdRole(new Integer(1));
-
         update.setHargaTawar(barangDto.getHargaTawar());
         List<Status> getStatus = statusRepo.findByStatusId(3);
         update.setStatus(getStatus);
         update.setUpdatedAt(new Date());
-//        update.setRoleId(role);
         Barang barang =barangRepo.save(update);
         return barang;
     }

@@ -20,6 +20,7 @@ public class Transaksi {
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinColumn (name = "status_id")
 //    private List<Status> status;
+
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "barang_id")
     private Barang barang;

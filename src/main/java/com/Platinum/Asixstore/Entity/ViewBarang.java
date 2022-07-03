@@ -36,4 +36,7 @@ public class ViewBarang {
     private String merk;
     @Column(name = "seri")
     private String seri;
+    @Lob
+    @Column(name = "profile_penjual")
+    private byte[] profilePenjual;
 }

@@ -1,5 +1,6 @@
 package com.Platinum.Asixstore.Controller;
 
+import com.Platinum.Asixstore.Repository.TransaksiRepo;
 import com.Platinum.Asixstore.Service.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,16 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransaksiController {
     @Autowired
     TransaksiService transaksiService;
+    @Autowired
+    TransaksiRepo transaksiRepo;
 
     @GetMapping("/barang/notifikasi/{barangId}")
-    public ResponseEntity<?> notifikasi_seller (@PathVariable int barangId){
+    public ResponseEntity<?> notifikasi_seller(@PathVariable int barangId) {
         return new ResponseEntity<>(transaksiService.notifikasi_seller(barangId), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/transaksi/{userId}/{barangId}")
-    public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId,@PathVariable("userId") int userId){
-        transaksiService.transaksi(barangId, userId);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
+    public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
 
+        transaksiService.transaksi(barangId, userId);
+        return new ResponseEntity<>("Transaksi Berhasil !", HttpStatus.ACCEPTED);
+    }
 }

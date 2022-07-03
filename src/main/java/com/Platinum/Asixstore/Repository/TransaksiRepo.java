@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.persistence.criteria.CriteriaBuilder;
 
 public interface TransaksiRepo extends JpaRepository<Transaksi, Integer> {
-//    Transaksi findByTransaksiId(int transaksiId);
+//    Transaksi findByBarang(int barangId);
 }
