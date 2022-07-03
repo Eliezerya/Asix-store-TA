@@ -49,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //uncomment if deploy to heroku
-//        http.cors().configurationSource(configurationSource()).and()
-//                .requiresChannel()
-//                .anyRequest()
-//                .requiresSecure();
+        http.cors().configurationSource(configurationSource()).and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
         //uncomment if deploy to heroku
         http.csrf().disable();
 
