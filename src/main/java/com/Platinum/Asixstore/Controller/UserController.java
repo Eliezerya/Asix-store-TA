@@ -33,7 +33,6 @@ public class UserController {
         return auth;
     }
 
-
     @GetMapping("/user/display") // view all user
     public ResponseEntity<?> display_user() {
         return new ResponseEntity<>(userService.show_user(), HttpStatus.ACCEPTED);

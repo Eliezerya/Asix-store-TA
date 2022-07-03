@@ -60,8 +60,8 @@ public class TransaksiService {
         transaksi.setHargaBarang(barang.getHargaBarang());
         transaksi.setNamaBarang(barang.getNamaBarang());
 
-//        List<Status> getStatus = statusRepo.findByStatusId(2);
-//        barang.setStatus(getStatus);
+        List<Status> getStatus = statusRepo.findByStatusId(2);
+        barang.setStatus(getStatus);
 //        transaksi.setStatus(getStatus);
         Role role = roleRepo.findByIdRole(new Integer(1));
         transaksi.setRole(role);

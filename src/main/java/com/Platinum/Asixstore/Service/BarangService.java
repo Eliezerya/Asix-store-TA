@@ -93,6 +93,7 @@ public class BarangService {
             Barang barang = barangRepo.findByBarangId(barangId);
             User user = userRepo.findById(userId);
             barang.setUser(user);
+            barang.setNamaBarang(barangDto.getNamaBarang());
             barang.setMerk(barangDto.getMerk());
             barang.setSeri(barangDto.getSeri());
             barang.setDeskripsi(barangDto.getDeskripsi());
