@@ -5,7 +5,9 @@ import com.Platinum.Asixstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransaksiService {
@@ -54,17 +56,21 @@ public class TransaksiService {
         Barang barang = barangRepo.findByBarangId(barangId);
         Transaksi transaksi = new Transaksi();
         transaksi.setBarang(barang);
+        transaksi.getBarang().setBarangId(barangId);
         transaksi.setHargaBarang(barang.getHargaBarang());
         transaksi.setNamaBarang(barang.getNamaBarang());
-        Status status = statusRepo.findByStatusId(new Integer(2));
-        transaksi.setStatus(status);
+
+//        List<Status> getStatus = statusRepo.findByStatusId(2);
+//        barang.setStatus(getStatus);
+//        transaksi.setStatus(getStatus);
         Role role = roleRepo.findByIdRole(new Integer(1));
         transaksi.setRole(role);
+        transaksi.getRole().setIdRole(1);
         User user = userRepo.findById(userId);
         transaksi.setUser(user);
         transaksi.getUser().setUserId(user.getUserId());
         transaksi.setCreatedAt(new Date());
-        transaksi.setUpdatedAt(new Date());
+//        transaksi.setUpdatedAt(new Date());
         return transaksiRepo.save(transaksi);
     }
 }

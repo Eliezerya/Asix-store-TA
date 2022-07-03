@@ -59,13 +59,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/Buyer/registrasi",
-                "/swagger-ui.html/**","/refresh-token","/user/display","/barang/{tipeBarang}","/barang").permitAll();
+                "/swagger-ui.html/**","/refresh-token","/user/display","/barang/{tipeBarang}","/barang","/detail-barang/{barangId}").permitAll();
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
         http.authorizeRequests().antMatchers("/seller","/barang/daftar").hasAnyAuthority("SELLER")
 
-                .and().authorizeRequests().antMatchers("/user/update/{userId}").hasAnyAuthority("BUYER");
+                .and().authorizeRequests().antMatchers("/user/update/{userId}","/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
 
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya

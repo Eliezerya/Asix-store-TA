@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "transaksi_tabel")
@@ -16,16 +17,16 @@ public class Transaksi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaksi_id")
     private int transaksiId;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn (name = "status_id")
-    private Status status;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinColumn (name = "status_id")
+//    private List<Status> status;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "barang_id")
     private Barang barang;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
     @JoinColumn(name = "nama_barang")
