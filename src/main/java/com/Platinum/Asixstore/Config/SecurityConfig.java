@@ -24,53 +24,50 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public final UserDetailsService userDetailsService;
+
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     //uncomment if deploy to heroku
-
-
-//    private CorsConfigurationSource configurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.addAllowedOrigin("*");
-//        config.addAllowedHeader(config.ALL);
-//        config.addAllowedHeader(config.ALL);
-//        config.addAllowedMethod(config.ALL);
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
-
+    private CorsConfigurationSource configurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader(config.ALL);
+        config.addAllowedHeader(config.ALL);
+        config.addAllowedMethod(config.ALL);
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
     //uncomment if deploy to heroku
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //uncomment if deploy to heroku
-
-//        http.cors().configurationSource(configurationSource()).and()
-//                .requiresChannel()
-//                .anyRequest()
-//                .requiresSecure();
-
+        http.cors().configurationSource(configurationSource()).and()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
         //uncomment if deploy to heroku
         http.csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/Buyer/registrasi",
-                "/swagger-ui.html/**","/refresh-token","/user/display","/barang/{tipeBarang}","/barang","/detail-barang/{barangId}").permitAll();
+                "/swagger-ui.html/**", "/refresh-token", "/user/display", "/barang/{tipeBarang}", "/barang", "/detail-barang/{barangId}").permitAll();
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        http.authorizeRequests().antMatchers("/seller","/barang/daftar").hasAnyAuthority("SELLER")
+        http.authorizeRequests().antMatchers("/seller", "/barang/daftar").hasAnyAuthority("SELLER")
 
-                .and().authorizeRequests().antMatchers("/user/update/{userId}","/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
+                .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
 
         http.authorizeRequests().anyRequest().authenticated();
         //get get token dari endpoint login ke endpoint lainnya

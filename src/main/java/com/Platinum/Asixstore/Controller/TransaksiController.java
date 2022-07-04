@@ -7,15 +7,13 @@ import com.Platinum.Asixstore.Entity.Transaksi;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.TransaksiRepo;
 import com.Platinum.Asixstore.Service.TransaksiService;
+import com.Platinum.Asixstore.Service.ViewBarangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
@@ -28,6 +26,8 @@ public class TransaksiController {
     TransaksiRepo transaksiRepo;
     @Autowired
     BarangRepo barangRepo;
+    @Autowired
+    ViewBarangService viewBarangService;
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -51,5 +51,15 @@ public class TransaksiController {
             transaksiService.update_harga_tawar(barangId, barangDto);
             return new ResponseEntity<>("barang telah ditawar", HttpStatus.ACCEPTED);
         }
+    }
+
+    @GetMapping("/daftar-jual/{statusId}")
+    public ResponseEntity<?> display_barangbyStatus(@PathVariable("statusId") int statusId) throws Exception {
+        return new ResponseEntity<>(viewBarangService.view_barang_bystatus(statusId), HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
+    public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
+        return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
     }
 }

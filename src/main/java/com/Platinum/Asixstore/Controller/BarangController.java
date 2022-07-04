@@ -65,8 +65,6 @@ public class BarangController {
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 
-
-
     @RequestMapping("barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
@@ -97,15 +95,7 @@ public class BarangController {
         }
     }
 
-    @GetMapping("/daftar-jual/{statusId}")
-    public ResponseEntity<?> display_barangbyStatus(@PathVariable("statusId") int statusId) throws Exception {
-        return new ResponseEntity<>(viewBarangService.view_barang_bystatus(statusId), HttpStatus.ACCEPTED);
-    }
 
-    @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
-    public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
-        return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
-    }
 
     @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
     public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{
