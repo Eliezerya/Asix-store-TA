@@ -20,6 +20,8 @@ public class ViewBarang {
     private String namaBarang;
     @Column(name = "deskripsi")
     private String deskripsi;
+    @Column(name = "status_id")
+    private int statusId;
     @Column(name = "status_barang")
     private String statusBarang;
     @Column(name = "tipe_barang")
@@ -28,6 +30,8 @@ public class ViewBarang {
     private long hargaBarang;
     @Column(name = "no_telepon")
     private long noTelepon;
+    @Column(name = "user_id")
+    private int userId;
     @Column(name = "email_seller")
     private String emailSeller;
     @Column(name = "kota")

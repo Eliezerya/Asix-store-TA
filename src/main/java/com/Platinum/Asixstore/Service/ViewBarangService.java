@@ -20,4 +20,12 @@ public class ViewBarangService {
     public List<ViewBarang> filter_barang(String tipeBarang) throws Exception {
         return viewBarangRepo.findByTipeBarang(tipeBarang);
     }
+
+    public List<ViewBarang> view_barang_bysellerandstatus(int userId, int statusId) throws Exception {
+        return viewBarangRepo.findByUserIdAndStatusId(userId,statusId);
+    }
+
+    public List<ViewBarang> view_barang_bystatus(int statusId) throws Exception {
+        return viewBarangRepo.findByStatusId(statusId);
+    }
 }

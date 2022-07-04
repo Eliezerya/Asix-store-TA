@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //uncomment if deploy to heroku
-    private CorsConfigurationSource configurationSource() {
+   /* private CorsConfigurationSource configurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
@@ -43,16 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod(config.ALL);
         source.registerCorsConfiguration("/**", config);
         return source;
-    }
+    }*/
     //uncomment if deploy to heroku
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //uncomment if deploy to heroku
-        http.cors().configurationSource(configurationSource()).and()
+        /*http.cors().configurationSource(configurationSource()).and()
                 .requiresChannel()
                 .anyRequest()
-                .requiresSecure();
+                .requiresSecure();*/
         //uncomment if deploy to heroku
         http.csrf().disable();
 
