@@ -38,8 +38,6 @@ public class BarangService {
     }
 
     public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
-
-
         Barang barang = new Barang();
         User user = userRepo.findById(userId);
         barangDto.setUserId(userId);

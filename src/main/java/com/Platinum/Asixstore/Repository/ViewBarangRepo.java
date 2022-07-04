@@ -12,6 +12,7 @@ import java.util.List;
 public interface ViewBarangRepo extends JpaRepository<ViewBarang, Integer> {
     List<ViewBarang> findAll();
     List<ViewBarang> findByTipeBarang(String tipebarang);
-
+    List<ViewBarang> findByStatusId(int statusId);
+    List<ViewBarang> findByUserIdAndStatusId(int userId, int statusId);
     ViewBarang findByBarangId(int barangId);
 }
