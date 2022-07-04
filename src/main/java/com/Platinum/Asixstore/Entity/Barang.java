@@ -49,4 +49,10 @@ public class Barang {
     private Date createdAt;
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinTable(name = "barang_buyer",
+            joinColumns = @JoinColumn(name = "barang_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private User buyer;
 }

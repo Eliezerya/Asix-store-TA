@@ -25,6 +25,7 @@ public class BarangDto {
     private User user;
     private List<Status> status;
     private Role roleId;
+    private User buyer;
 
 
 }

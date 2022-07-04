@@ -65,15 +65,7 @@ public class BarangController {
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
-    public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
-        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
-            return new ResponseEntity<>("Anda tidak dapat membeli barang sendiri", HttpStatus.FORBIDDEN);
-        }else {
-            Barang barang = barangService.update_harga_tawar(barangId, barangDto);
-            return new ResponseEntity<>("barang telah ditawar", HttpStatus.ACCEPTED);
-        }
-    }
+
 
     @RequestMapping("barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {

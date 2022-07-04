@@ -61,16 +61,7 @@ public class BarangService {
     }
 
 
-    public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
-        Barang update = barangRepo.findByBarangId(barangId);
 
-        update.setHargaTawar(barangDto.getHargaTawar());
-        List<Status> getStatus = statusRepo.findByStatusId(3);
-        update.setStatus(getStatus);
-        update.setUpdatedAt(new Date());
-        Barang barang =barangRepo.save(update);
-        return barang;
-    }
 
     public boolean delete_barang(int barangId){
         Barang barang = barangRepo.findByBarangId(barangId);
