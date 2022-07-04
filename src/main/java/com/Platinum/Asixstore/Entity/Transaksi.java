@@ -24,12 +24,9 @@ public class Transaksi {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "barang_id")
     private Barang barang;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id")
-    private Role role;
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "user_id_seller")
+    private User seller;
     @JoinColumn(name = "nama_barang")
     private String namaBarang;
     @JoinColumn(name = "harga_barang")
@@ -38,5 +35,8 @@ public class Transaksi {
     private Date createdAt;
     @Column(name = "updated_at")
     private Date updatedAt;
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id_buyer")
+    private User buyer;
 
 }

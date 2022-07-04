@@ -80,19 +80,18 @@ public class TransaksiService {
         Transaksi transaksi = new Transaksi();
         transaksi.setBarang(barang);
         transaksi.getBarang().setBarangId(barangId);
-        transaksi.setHargaBarang(barang.getHargaBarang());
+        transaksi.setHargaBarang(barang.getHargaTawar());
         transaksi.setNamaBarang(barang.getNamaBarang());
 
         List<Status> getStatus = statusRepo.findByStatusId(2);
         barang.setStatus(getStatus);
-//        transaksi.setStatus(getStatus);
-        Role role = roleRepo.findByIdRole(new Integer(1));
-        transaksi.setRole(role);
-        transaksi.getRole().setIdRole(1);
+
         User user = userRepo.findById(userId);
-        transaksi.setUser(user);
-        transaksi.getUser().setUserId(user.getUserId());
+        transaksi.setSeller(user);
+        transaksi.getSeller().setUserId(user.getUserId());
         transaksi.setCreatedAt(new Date());
+        User buyer = barang.getBuyer();
+        transaksi.setBuyer(buyer);
         return transaksiRepo.save(transaksi);
     }
 }
