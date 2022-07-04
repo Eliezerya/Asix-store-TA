@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Table(name = "barang_table")
-public class    Barang {
+public class Barang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "barang_id")
@@ -45,12 +45,14 @@ public class    Barang {
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private List<Status> status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "user_id_buyer", nullable = true)
-    private User Buyer;
-
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinTable(name = "barang_buyer",
+            joinColumns = @JoinColumn(name = "barang_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private User buyer;
 }

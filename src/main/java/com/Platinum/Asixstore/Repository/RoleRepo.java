@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface RoleRepo extends JpaRepository<Role, Integer> {
     List<Role> findByIdRole(int idRole);
+    Role findByIdRole(Integer idRole);
 }

@@ -11,4 +11,5 @@ import java.util.List;
 @Transactional
 public interface StatusRepo extends JpaRepository<Status, Integer> {
     List<Status>  findByStatusId(int statusId);
+    Status findByStatusId(Integer statusId);
 }

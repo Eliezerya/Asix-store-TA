@@ -48,7 +48,6 @@ public class UserService {
         List<Role> getRole = roleRepo.findByIdRole(2); //Seller
         user.setRoles(getRole);
         userRepo.save(user);
-
     }
 
 }

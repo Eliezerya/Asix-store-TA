@@ -44,7 +44,7 @@ public class BarangController {
         return auth;
     }
 
-    @PostMapping("/barang/{userId}/daftar") // barang daftar
+    @PostMapping("/barang/{userId}/daftar") // barang submit
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
@@ -65,17 +65,9 @@ public class BarangController {
         return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
-    public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
-        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
-            return new ResponseEntity<>("Anda tidak dapat membeli barang sendiri", HttpStatus.FORBIDDEN);
-        }else {
-            Barang barang = barangService.update_harga_tawar(barangId, barangDto);
-            return new ResponseEntity<>("barang telah ditawar", HttpStatus.ACCEPTED);
-        }
-    }
 
-    @DeleteMapping("barang/delete/{barangId}") //delete barang
+
+    @RequestMapping("barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
         User user = userRepo.findById(barang.getUser().getUserId());
@@ -113,6 +105,12 @@ public class BarangController {
     @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
     public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
         return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
+    public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{
+        ViewBarang viewBarang = viewBarangService.view_barang_by_id(barangId);
+        return new ResponseEntity<>(viewBarang, HttpStatus.ACCEPTED);
     }
 
 }

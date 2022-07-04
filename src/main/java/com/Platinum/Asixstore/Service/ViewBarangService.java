@@ -14,6 +14,7 @@ public class ViewBarangService {
     @Autowired
     ViewBarangRepo viewBarangRepo;
 
+
     public List<ViewBarang> view_semua_barang(){
         return viewBarangRepo.findAll();
     }
@@ -21,11 +22,15 @@ public class ViewBarangService {
         return viewBarangRepo.findByTipeBarang(tipeBarang);
     }
 
+
     public List<ViewBarang> view_barang_bysellerandstatus(int userId, int statusId) throws Exception {
         return viewBarangRepo.findByUserIdAndStatusId(userId,statusId);
     }
 
     public List<ViewBarang> view_barang_bystatus(int statusId) throws Exception {
         return viewBarangRepo.findByStatusId(statusId);
+    }
+    public ViewBarang view_barang_by_id(int barangId){
+        return viewBarangRepo.findByBarangId(barangId);
     }
 }

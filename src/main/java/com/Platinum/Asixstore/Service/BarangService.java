@@ -2,9 +2,11 @@ package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.Barang;
+import com.Platinum.Asixstore.Entity.Role;
 import com.Platinum.Asixstore.Entity.Status;
 import com.Platinum.Asixstore.Entity.User;
 import com.Platinum.Asixstore.Repository.BarangRepo;
+import com.Platinum.Asixstore.Repository.RoleRepo;
 import com.Platinum.Asixstore.Repository.StatusRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class BarangService {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    RoleRepo roleRepo;
     @Autowired
     StatusRepo statusRepo;
     public Authentication authentication() {
@@ -55,19 +59,7 @@ public class BarangService {
     }
 
 
-    public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
-        Barang update = barangRepo.findByBarangId(barangId);
 
-        User Buyer = userRepo.findByEmail(authentication().getPrincipal().toString());
-
-        update.setHargaTawar(barangDto.getHargaTawar());
-        List<Status> getStatus = statusRepo.findByStatusId(3);
-        update.setStatus(getStatus);
-        update.setUpdatedAt(new Date());
-        update.setBuyer(Buyer);
-        Barang barang =barangRepo.save(update);
-        return barang;
-    }
 
     public boolean delete_barang(int barangId){
         Barang barang = barangRepo.findByBarangId(barangId);
@@ -87,6 +79,7 @@ public class BarangService {
             Barang barang = barangRepo.findByBarangId(barangId);
             User user = userRepo.findById(userId);
             barang.setUser(user);
+            barang.setNamaBarang(barangDto.getNamaBarang());
             barang.setMerk(barangDto.getMerk());
             barang.setSeri(barangDto.getSeri());
             barang.setDeskripsi(barangDto.getDeskripsi());
@@ -96,4 +89,6 @@ public class BarangService {
             barang.setHargaTawar(barangDto.getHargaBarang());
             barangRepo.save(barang);
     }
+
+
 }
