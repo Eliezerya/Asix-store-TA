@@ -8,6 +8,7 @@ import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.TransaksiRepo;
 import com.Platinum.Asixstore.Service.TransaksiService;
 import com.Platinum.Asixstore.Service.ViewBarangService;
+import com.Platinum.Asixstore.Service.ViewDaftarBeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class TransaksiController {
     BarangRepo barangRepo;
     @Autowired
     ViewBarangService viewBarangService;
+
+    @Autowired
+    ViewDaftarBeliService viewDaftarBeliService;
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -64,5 +68,10 @@ public class TransaksiController {
     @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
     public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
         return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/daftar-beli/{userIdBuyer}/{statusBarang}", method = RequestMethod.GET)
+    public ResponseEntity<?> display_daftarbeliBuyer(@PathVariable("userIdBuyer") int userIdBuyer, @PathVariable("statusBarang") String statusBarang) {
+        return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
     }
 }
