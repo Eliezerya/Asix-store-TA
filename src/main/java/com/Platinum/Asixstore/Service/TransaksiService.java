@@ -35,6 +35,9 @@ public class TransaksiService {
     @Autowired
     RoleRepo roleRepo;
 
+    @Autowired
+    NotifikasiRepo notifikasiRepo;
+
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
@@ -42,12 +45,23 @@ public class TransaksiService {
 
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang tawar = barangRepo.findByBarangId(barangId);
+        Notifikasi notifikasi = new Notifikasi();
+
         User buyer = userRepo.findByEmail(authentication().getPrincipal().toString());
         tawar.setHargaTawar(barangDto.getHargaTawar());
         List<Status> getStatus = statusRepo.findByStatusId(3);
         tawar.setStatus(getStatus);
         tawar.setBuyer(buyer);
         tawar.setUpdatedAt(new Date());
+
+        notifikasi.setBarang(tawar);
+        notifikasi.setHargaBarang(tawar.getHargaBarang());
+        notifikasi.setBuyer(buyer);
+        notifikasi.setNamaBarang(tawar.getNamaBarang());
+        notifikasi.setUpdatedAt(tawar.getUpdatedAt());
+        notifikasi.setCreatedAt(tawar.getCreatedAt());
+        notifikasi.setSeller(tawar.getUser());
+        notifikasiRepo.save(notifikasi);
         return barangRepo.save(tawar);
     }
 
