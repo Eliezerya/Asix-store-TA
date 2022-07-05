@@ -29,6 +29,8 @@ public class TransaksiService {
 
     @Autowired
     TransaksiRepo transaksiRepo;
+    @Autowired
+    ViewNotifikasiRepo viewNotifikasiRepo;
 
     @Autowired
     RoleRepo roleRepo;
@@ -51,25 +53,8 @@ public class TransaksiService {
 
 
     //seller notifikasi
-    public Barang notifikasi_seller(int barangId) {
-        Barang barangDitawar = barangRepo.findByBarangId(barangId);
-
-        //cara tau kalau ada barang ditawar bagaimana ?????
-
-        barangDitawar.getBarangId();
-        barangDitawar.getNamaBarang();
-        barangDitawar.getStatus();
-        barangDitawar.getNamaBarang();
-        barangDitawar.getBarangImg();
-        barangDitawar.getHargaBarang();
-        barangDitawar.getHargaTawar();
-        barangDitawar.getTipeBarang();
-        barangDitawar.getMerk();
-        barangDitawar.getSeri();
-        barangDitawar.getUpdatedAt();
-        barangDitawar.getBuyer().getNama();
-
-        return barangDitawar;
+    public List<ViewNotifikasi> notifikasi_seller(int userIdSeller, String statusBarang) {
+        return viewNotifikasiRepo.findByUserIdSellerAndStatusBarang(userIdSeller,statusBarang);
     }
 
     //transaksi

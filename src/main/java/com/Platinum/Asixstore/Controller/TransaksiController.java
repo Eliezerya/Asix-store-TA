@@ -33,9 +33,9 @@ public class TransaksiController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
     }
-    @GetMapping("/barang/notifikasi/{barangId}")
-    public ResponseEntity<?> notifikasi_seller(@PathVariable int barangId) {
-        return new ResponseEntity<>(transaksiService.notifikasi_seller(barangId), HttpStatus.ACCEPTED);
+    @RequestMapping(value = "/barang/notifikasi/{userIdSeller}/{statusBarang}" , method = RequestMethod.GET)
+    public ResponseEntity<?> notifikasi_seller(@PathVariable int userIdSeller,@PathVariable String statusBarang) {
+        return new ResponseEntity<>(transaksiService.notifikasi_seller(userIdSeller,statusBarang), HttpStatus.ACCEPTED);
     }
     @GetMapping("/transaksi/{userId}/{barangId}")
     public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
@@ -57,7 +57,6 @@ public class TransaksiController {
     public ResponseEntity<?> display_barangbyStatus(@PathVariable("statusId") int statusId) throws Exception {
         return new ResponseEntity<>(viewBarangService.view_barang_bystatus(statusId), HttpStatus.ACCEPTED);
     }
-
     @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
     public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
         return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
