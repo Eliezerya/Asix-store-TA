@@ -95,8 +95,6 @@ public class BarangController {
         }
     }
 
-
-
     @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
     public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{
         ViewBarang viewBarang = viewBarangService.view_barang_by_id(barangId);
