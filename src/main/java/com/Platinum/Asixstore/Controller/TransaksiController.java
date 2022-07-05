@@ -39,10 +39,14 @@ public class TransaksiController {
     }
     @GetMapping("/transaksi/{userId}/{barangId}")
     public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
-        transaksiService.transaksi(barangId, userId);
-        return new ResponseEntity<>("Transaksi Berhasil !", HttpStatus.ACCEPTED);
-    }
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
+            transaksiService.transaksi(barangId, userId);
+            return new ResponseEntity<>("Transaksi Berhasil !", HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
+        }
 
+    }
     @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
