@@ -36,25 +36,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //uncomment if deploy to heroku
-    private CorsConfigurationSource configurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedMethod(config.ALL);
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+//    private CorsConfigurationSource configurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader(config.ALL);
+//        config.addAllowedHeader(config.ALL);
+//        config.addAllowedMethod(config.ALL);
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
     //uncomment if deploy to heroku
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //uncomment if deploy to heroku
-        http.cors().configurationSource(configurationSource()).and()
-                .requiresChannel()
-                .anyRequest()
-                .requiresSecure();
+//        http.cors().configurationSource(configurationSource()).and()
+//                .requiresChannel()
+//                .anyRequest()
+//                .requiresSecure();
         //uncomment if deploy to heroku
         http.csrf().disable();
 
@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        http.authorizeRequests().antMatchers("/seller", "/barang/daftar").hasAnyAuthority("SELLER")
+        http.authorizeRequests().antMatchers("/seller", "/barang/{userId}/daftar").hasAnyAuthority("SELLER")
 
                 .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
 

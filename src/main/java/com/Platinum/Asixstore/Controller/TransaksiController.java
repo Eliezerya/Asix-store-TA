@@ -6,6 +6,7 @@ import com.Platinum.Asixstore.Entity.Barang;
 import com.Platinum.Asixstore.Entity.Transaksi;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.TransaksiRepo;
+import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.TransaksiService;
 import com.Platinum.Asixstore.Service.ViewBarangService;
 import com.Platinum.Asixstore.Service.ViewDaftarBeliService;
@@ -27,20 +28,12 @@ public class TransaksiController {
     TransaksiRepo transaksiRepo;
     @Autowired
     BarangRepo barangRepo;
-    @Autowired
-    ViewBarangService viewBarangService;
-
-    @Autowired
-    ViewDaftarBeliService viewDaftarBeliService;
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
     }
-    @RequestMapping(value = "/barang/notifikasi/{userIdSeller}/{statusBarang}" , method = RequestMethod.GET)
-    public ResponseEntity<?> notifikasi_seller(@PathVariable int userIdSeller,@PathVariable String statusBarang) {
-        return new ResponseEntity<>(transaksiService.notifikasi_seller(userIdSeller,statusBarang), HttpStatus.ACCEPTED);
-    }
+
     @GetMapping("/transaksi/{userId}/{barangId}")
     public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
@@ -49,7 +42,6 @@ public class TransaksiController {
         }else {
             return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
         }
-
     }
     @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
@@ -61,17 +53,5 @@ public class TransaksiController {
         }
     }
 
-    @GetMapping("/daftar-jual/{statusId}")
-    public ResponseEntity<?> display_barangbyStatus(@PathVariable("statusId") int statusId) throws Exception {
-        return new ResponseEntity<>(viewBarangService.view_barang_bystatus(statusId), HttpStatus.ACCEPTED);
-    }
-    @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)//tampilkan semua barang
-    public ResponseEntity<?> display_barangbySellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
-        return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
-    }
 
-    @RequestMapping(value = "/daftar-beli/{userIdBuyer}/{statusBarang}", method = RequestMethod.GET)
-    public ResponseEntity<?> display_daftarbeliBuyer(@PathVariable("userIdBuyer") int userIdBuyer, @PathVariable("statusBarang") String statusBarang) {
-        return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
-    }
 }
