@@ -11,4 +11,6 @@ import java.util.List;
 @Transactional
 public interface ViewNotifikasiRepo extends JpaRepository<ViewNotifikasi, Integer> {
     List<ViewNotifikasi> findByUserIdSellerAndStatusBarang(int userIdSeller, String statusBarang);
+
+    List<ViewNotifikasi> findByUserIdBuyerAndStatusBarang(int userIdBuyer, String statusBarang);
 }

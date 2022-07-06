@@ -1,7 +1,6 @@
 package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
-import com.Platinum.Asixstore.Dto.TransaksiDto;
 import com.Platinum.Asixstore.Entity.*;
 import com.Platinum.Asixstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +29,9 @@ public class TransaksiService {
     TransaksiRepo transaksiRepo;
     @Autowired
     ViewNotifikasiRepo viewNotifikasiRepo;
+
+    @Autowired
+    ViewNotifikasiBuyerRepo viewNotifikasiBuyerRepo;
 
     @Autowired
     RoleRepo roleRepo;
@@ -69,6 +70,10 @@ public class TransaksiService {
     //seller notifikasi
     public List<ViewNotifikasi> notifikasi_seller(int userIdSeller, String statusBarang) {
         return viewNotifikasiRepo.findByUserIdSellerAndStatusBarang(userIdSeller,statusBarang);
+    }
+
+    public List<ViewNotifikasiBuyer> notifikasi_buyer(int userIdBuyer, String statusBarang) {
+        return viewNotifikasiBuyerRepo.findByUserIdBuyerAndStatusBarang(userIdBuyer,statusBarang);
     }
 
     //transaksi
