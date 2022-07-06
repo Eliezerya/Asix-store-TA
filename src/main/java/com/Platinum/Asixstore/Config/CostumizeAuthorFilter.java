@@ -28,9 +28,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CostumizeAuthorFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equalsIgnoreCase("/login")){
+        if (request.getServletPath().equalsIgnoreCase("/login") || request.getServletPath().equalsIgnoreCase("/refresh-token")){
             filterChain.doFilter(request, response);
-
         }else {
             String authHeader = request.getHeader(AUTHORIZATION);
             if (authHeader != null && authHeader.startsWith("Bearer ")){
