@@ -35,8 +35,12 @@ public class NotifikasiController {
         }
     }
 
-    @RequestMapping(value = "/barang/notifikasi-buyer/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/notifikasi/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
     public ResponseEntity<?> notifikasi_buyer(@PathVariable int userIdBuyer,@PathVariable String statusBarang) {
-        return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(userRepo.findById(userIdBuyer).getEmail())){
+            return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }
