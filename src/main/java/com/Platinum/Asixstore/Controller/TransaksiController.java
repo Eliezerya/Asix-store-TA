@@ -60,6 +60,4 @@ public class TransaksiController {
         return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
     }
 
-
-    
 }

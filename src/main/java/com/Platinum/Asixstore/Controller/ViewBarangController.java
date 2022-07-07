@@ -28,8 +28,5 @@ public class ViewBarangController {
         return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/daftar-beli/{userIdBuyer}/{statusBarang}", method = RequestMethod.GET)
-    public ResponseEntity<?> display_daftar_beli_Buyer(@PathVariable("userIdBuyer") int userIdBuyer, @PathVariable("statusBarang") String statusBarang) {
-        return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
-    }
+
 }
