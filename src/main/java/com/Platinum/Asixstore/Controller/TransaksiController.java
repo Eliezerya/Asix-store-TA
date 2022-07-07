@@ -27,6 +27,8 @@ public class TransaksiController {
     @Autowired
     TransaksiRepo transaksiRepo;
     @Autowired
+    ViewDaftarBeliService viewDaftarBeliService;
+    @Autowired
     BarangRepo barangRepo;
 
     public Authentication authentication() {
@@ -58,9 +60,6 @@ public class TransaksiController {
         return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/barang/notifikasi-buyer/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
-    public ResponseEntity<?> notifikasi_buyer(@PathVariable int userIdBuyer,@PathVariable String statusBarang) {
-        return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
-    }
+
     
 }

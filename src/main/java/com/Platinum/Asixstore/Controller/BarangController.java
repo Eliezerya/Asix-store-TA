@@ -54,7 +54,7 @@ public class BarangController {
             if (barangService.submit_barang(userId,barangDto) != null){
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }else {
-                return new ResponseEntity<>("Barang dijual melebihi batas maksimum. Batas Maksimum Penjualan adalah 4",HttpStatus.ACCEPTED);
+                return new ResponseEntity<>("Barang dijual melebihi batas maksimum. Batas Maksimum Penjualan adalah 4!",HttpStatus.ACCEPTED);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

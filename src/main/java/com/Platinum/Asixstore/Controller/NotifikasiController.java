@@ -34,4 +34,9 @@ public class NotifikasiController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(value = "/barang/notifikasi-buyer/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
+    public ResponseEntity<?> notifikasi_buyer(@PathVariable int userIdBuyer,@PathVariable String statusBarang) {
+        return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
+    }
 }
