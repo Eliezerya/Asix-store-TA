@@ -1,14 +1,8 @@
 package com.Platinum.Asixstore.Service;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
-import com.Platinum.Asixstore.Entity.Barang;
-import com.Platinum.Asixstore.Entity.Role;
-import com.Platinum.Asixstore.Entity.Status;
-import com.Platinum.Asixstore.Entity.User;
-import com.Platinum.Asixstore.Repository.BarangRepo;
-import com.Platinum.Asixstore.Repository.RoleRepo;
-import com.Platinum.Asixstore.Repository.StatusRepo;
-import com.Platinum.Asixstore.Repository.UserRepo;
+import com.Platinum.Asixstore.Entity.*;
+import com.Platinum.Asixstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -32,62 +26,72 @@ public class BarangService {
     RoleRepo roleRepo;
     @Autowired
     StatusRepo statusRepo;
+
+    @Autowired
+    ViewBarangRepo viewBarangRepo;
+
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
     }
 
-    public Barang submit_barang(int userId, BarangDto barangDto)throws IOException {
-        Barang barang = new Barang();
-        User user = userRepo.findById(userId);
-        barangDto.setUserId(userId);
-        barang.setUser(user);
-        List<Status> getStatus = statusRepo.findByStatusId(1);
-        barang.setStatus(getStatus);
-        barang.setNamaBarang(barangDto.getNamaBarang());
-        barang.setMerk(barangDto.getMerk());
-        barang.setSeri(barangDto.getSeri());
-        barang.setDeskripsi(barangDto.getDeskripsi());
-        barang.setTipeBarang(barangDto.getTipeBarang().toUpperCase(Locale.ROOT));
-        barang.setBarangImg(barangDto.getBarangImg().getBytes());
-        barang.setHargaBarang(barangDto.getHargaBarang());
-        barang.setHargaTawar(barangDto.getHargaBarang());
-        barang.setCreatedAt(new Date());
+    public Barang submit_barang(int userId, BarangDto barangDto) throws IOException {
 
-
-        return barangRepo.save(barang);
-    }
-
-
-
-
-    public boolean delete_barang(int barangId){
-        Barang barang = barangRepo.findByBarangId(barangId);
-        if (barang != null) {
-            barangRepo.deleteById(barangId);
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    public Barang display_barang_byId(int barangId) throws IOException{
-        return barangRepo.findByBarangId(barangId);
-    }
-
-    public void edit_barang(int barangId, int userId, BarangDto barangDto)throws IOException{
-            Barang barang = barangRepo.findByBarangId(barangId);
+        List<ViewBarang> cekCountAvailabel = viewBarangRepo.findByUserIdAndStatusId(userId, 1);
+        List<ViewBarang> cekCountBidding = viewBarangRepo.findByUserIdAndStatusId(userId, 3);
+        int availabel = cekCountAvailabel.size();
+        int bidding = cekCountBidding.size();
+        int selling = availabel + bidding;
+        if (selling <  4){
+            Barang barang = new Barang();
             User user = userRepo.findById(userId);
+            barangDto.setUserId(userId);
             barang.setUser(user);
+            List<Status> getStatus = statusRepo.findByStatusId(1);
+            barang.setStatus(getStatus);
             barang.setNamaBarang(barangDto.getNamaBarang());
             barang.setMerk(barangDto.getMerk());
             barang.setSeri(barangDto.getSeri());
             barang.setDeskripsi(barangDto.getDeskripsi());
-            barang.setTipeBarang(barangDto.getTipeBarang());
+            barang.setTipeBarang(barangDto.getTipeBarang().toUpperCase(Locale.ROOT));
             barang.setBarangImg(barangDto.getBarangImg().getBytes());
             barang.setHargaBarang(barangDto.getHargaBarang());
             barang.setHargaTawar(barangDto.getHargaBarang());
-            barangRepo.save(barang);
+            barang.setCreatedAt(new Date());
+            return barangRepo.save(barang);
+        }else {
+            return null;
+        }
+    }
+
+
+    public boolean delete_barang(int barangId) {
+        Barang barang = barangRepo.findByBarangId(barangId);
+        if (barang != null) {
+            barangRepo.deleteById(barangId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Barang display_barang_byId(int barangId) throws IOException {
+        return barangRepo.findByBarangId(barangId);
+    }
+
+    public void edit_barang(int barangId, int userId, BarangDto barangDto) throws IOException {
+        Barang barang = barangRepo.findByBarangId(barangId);
+        User user = userRepo.findById(userId);
+        barang.setUser(user);
+        barang.setNamaBarang(barangDto.getNamaBarang());
+        barang.setMerk(barangDto.getMerk());
+        barang.setSeri(barangDto.getSeri());
+        barang.setDeskripsi(barangDto.getDeskripsi());
+        barang.setTipeBarang(barangDto.getTipeBarang());
+        barang.setBarangImg(barangDto.getBarangImg().getBytes());
+        barang.setHargaBarang(barangDto.getHargaBarang());
+        barang.setHargaTawar(barangDto.getHargaBarang());
+        barangRepo.save(barang);
     }
 
 

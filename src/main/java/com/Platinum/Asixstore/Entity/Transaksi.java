@@ -17,10 +17,6 @@ public class Transaksi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaksi_id")
     private int transaksiId;
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinColumn (name = "status_id")
-//    private List<Status> status;
-
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "barang_id")
     private Barang barang;

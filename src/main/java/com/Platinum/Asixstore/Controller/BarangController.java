@@ -47,13 +47,19 @@ public class BarangController {
     @PostMapping("/barang/{userId}/daftar") // barang submit
     public ResponseEntity<?> submit_barang(@PathVariable int userId, BarangDto barangDto, @RequestParam("barangImg") MultipartFile fileUpload) throws IOException {
         User userToken = userRepo.findById(userId);
+
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
             barangDto.setBarangImg(fileUpload);
             Barang barang = barangService.submit_barang(userId, barangDto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            if (barangService.submit_barang(userId,barangDto) != null){
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }else {
+                return new ResponseEntity<>("Barang dijual melebihi batas maksimum. Batas Maksimum Penjualan adalah 4",HttpStatus.ACCEPTED);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
     }
     @GetMapping("/barang") //tampilkan semua barang
     public ResponseEntity<?> display_barang() {
@@ -94,8 +100,6 @@ public class BarangController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
-
-
 
     @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
     public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{

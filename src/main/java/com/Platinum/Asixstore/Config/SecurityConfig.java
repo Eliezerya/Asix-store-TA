@@ -61,11 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/Buyer/registrasi",
-                "/swagger-ui.html/**", "/refresh-token", "/user/display", "/barang/{tipeBarang}", "/barang", "/detail-barang/{barangId}").permitAll();
+                "/swagger-ui.html/**", "/refresh-token", "/user/display", "/barang/{tipeBarang}", "/barang", "/detail-barang/{barangId}","/refresh-token").permitAll();
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        http.authorizeRequests().antMatchers("/seller", "/barang/daftar").hasAnyAuthority("SELLER")
+        http.authorizeRequests().antMatchers("/seller", "/barang/{userId}/daftar").hasAnyAuthority("SELLER")
 
                 .and().authorizeRequests().antMatchers("/user/update/{userId}", "/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
 
