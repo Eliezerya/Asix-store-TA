@@ -26,7 +26,7 @@ public class NotifikasiController {
         return auth;
     }
 
-    @RequestMapping(value = "/user/notifikasi/{userIdSeller}/{statusBarang}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/notifikasi-seller/{userIdSeller}/{statusBarang}" , method = RequestMethod.GET)
     public ResponseEntity<?> notifikasi_seller(@PathVariable int userIdSeller, @PathVariable String statusBarang) {
         if(authentication().getPrincipal().toString().equalsIgnoreCase(userRepo.findById(userIdSeller).getEmail())){
             return new ResponseEntity<>(transaksiService.notifikasi_seller(userIdSeller,statusBarang), HttpStatus.ACCEPTED);
@@ -35,7 +35,7 @@ public class NotifikasiController {
         }
     }
 
-    @RequestMapping(value = "/user/notifikasi/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/notifikasi-buyer/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
     public ResponseEntity<?> notifikasi_buyer(@PathVariable int userIdBuyer,@PathVariable String statusBarang) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(userRepo.findById(userIdBuyer).getEmail())){
             return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);

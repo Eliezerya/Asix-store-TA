@@ -61,15 +61,6 @@ public class BarangController {
         }
 
     }
-    @GetMapping("/barang") //tampilkan semua barang
-    public ResponseEntity<?> display_barang() {
-        return new ResponseEntity<>(viewBarangService.view_semua_barang(), HttpStatus.ACCEPTED);
-    }
-    @RequestMapping(value = "/barang/{tipeBarang}", method = RequestMethod.GET) // kategori gitar dan aksesoris
-    public ResponseEntity<?> filter_barang(@PathVariable("tipeBarang") String tipeBarang) throws Exception {
-        List<ViewBarang> barangFilter = viewBarangService.filter_barang(tipeBarang.toUpperCase(Locale.ROOT));
-        return new ResponseEntity<>(barangFilter, HttpStatus.ACCEPTED);
-    }
 
     @RequestMapping("barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {
@@ -101,10 +92,6 @@ public class BarangController {
         }
     }
 
-    @GetMapping(value = "/detail-barang/{barangId}") //view barang by id
-    public ResponseEntity<?> view_barang(@PathVariable(value = "barangId") int barangId) throws Exception{
-        ViewBarang viewBarang = viewBarangService.view_barang_by_id(barangId);
-        return new ResponseEntity<>(viewBarang, HttpStatus.ACCEPTED);
-    }
+
 
 }
