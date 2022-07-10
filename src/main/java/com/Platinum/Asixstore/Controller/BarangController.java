@@ -51,7 +51,7 @@ public class BarangController {
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
             barangDto.setBarangImg(fileUpload);
             Barang barang = barangService.submit_barang(userId, barangDto);
-            if (barangService.submit_barang(userId,barangDto) != null){
+            if (barang != null){
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }else {
                 return new ResponseEntity<>("Barang dijual melebihi batas maksimum. Batas Maksimum Penjualan adalah 4!",HttpStatus.ACCEPTED);
