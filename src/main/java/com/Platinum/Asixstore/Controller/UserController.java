@@ -124,7 +124,7 @@ public class UserController {
                 User userLogin = userLoginService.findByUsername(usernameDecode);
                 String accessToken = JWT.create()
                         .withSubject(userLogin.getEmail())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 120 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 24 * 6 * 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", userLogin.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()))
                         .sign(algorithm);
