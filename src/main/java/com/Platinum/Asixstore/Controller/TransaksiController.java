@@ -60,4 +60,13 @@ public class TransaksiController {
         return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/transaksi-detail/{barangId}")
+    public ResponseEntity<?> transaksi_byBarangId(@PathVariable("barangId") int barangId) {
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())) {
+            return new ResponseEntity<>(transaksiService.view_transaksi_BarangId(barangId), HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
+        }
+    }
+
 }

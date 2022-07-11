@@ -8,4 +8,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 
 public interface TransaksiRepo extends JpaRepository<Transaksi, Integer> {
     Transaksi findByBarang(int barangId);
+
+    Transaksi findByTransaksiId(int transaksiId);
 }
