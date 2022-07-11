@@ -98,4 +98,8 @@ public class TransaksiService {
         transaksi.setBuyer(buyer);
         return transaksiRepo.save(transaksi);
     }
+
+    public List<ViewNotifikasi> view_transaksi_BarangId(int barangId) {
+        return viewNotifikasiRepo.findByBarangId(barangId);
+    }
 }
