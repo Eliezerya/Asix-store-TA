@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @RestController
 public class ViewBarangController {
@@ -29,6 +31,9 @@ public class ViewBarangController {
     }
     @RequestMapping(value = "/daftar-jual/{userId}/{statusId}", method = RequestMethod.GET)
     public ResponseEntity<?> display_barang_by_SellerandStatus(@PathVariable("userId") int userId,@PathVariable("statusId") int statusId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+
+//        map.put("file_name", );
         return new ResponseEntity<>(viewBarangService.view_barang_bysellerandstatus(userId,statusId), HttpStatus.ACCEPTED);
     }
 

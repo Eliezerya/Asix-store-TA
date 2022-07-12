@@ -4,6 +4,7 @@ import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Entity.*;
 import com.Platinum.Asixstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +30,9 @@ public class BarangService {
 
     @Autowired
     ViewBarangRepo viewBarangRepo;
+
+    @Autowired
+    StatusMasterRepo statusMasterRepo;
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -65,9 +69,11 @@ public class BarangService {
     }
 
 
+    @Modifying
     public boolean delete_barang(int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
         if (barang != null) {
+            statusMasterRepo.deleteNative(barangId);
             barangRepo.deleteById(barangId);
             return true;
         } else {
