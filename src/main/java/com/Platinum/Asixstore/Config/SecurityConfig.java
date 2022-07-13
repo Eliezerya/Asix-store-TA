@@ -57,8 +57,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/Buyer/registrasi",
-                "/swagger-ui.html/**", "/refresh-token", "/user/display", "/barang/{tipeBarang}", "/barang", "/detail-barang/{barangId}","/refresh-token").permitAll();
+        http.authorizeRequests().antMatchers(
+                "/Buyer/registrasi",
+                "/swagger-ui.html/**",
+                "/refresh-token", "/authenticate",
+                "/swagger-resources/**",
+                "/swagger-ui/**",
+                "/webjars/**",
+                "/v2/api-docs",
+                "/user/display",
+                "/barang/{tipeBarang}",
+                "/barang",
+                "/detail-barang/{barangId}",
+                "/refresh-token").permitAll();
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
