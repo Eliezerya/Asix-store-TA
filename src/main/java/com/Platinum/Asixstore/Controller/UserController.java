@@ -84,7 +84,7 @@ public class UserController {
             userService.display_userId(userId);
             return new ResponseEntity<>("Update Seller telah berhasil,\nAnda bisa menjual barang", HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>("blok", HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>("baka mitaii", HttpStatus.BAD_GATEWAY);
         }
 
     }
