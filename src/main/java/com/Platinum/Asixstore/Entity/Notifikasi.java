@@ -18,7 +18,7 @@ public class Notifikasi {
     private int notifikasiId;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "barang_id")
-    private Barang barang;
+    private Barang barangId;
     @JoinColumn(name = "nama_barang")
     private String namaBarang;
     @JoinColumn(name = "harga_barang")

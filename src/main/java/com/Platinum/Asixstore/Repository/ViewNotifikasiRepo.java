@@ -14,4 +14,5 @@ public interface ViewNotifikasiRepo extends JpaRepository<ViewNotifikasi, Intege
 
     List<ViewNotifikasi> findByUserIdBuyerAndStatusBarang(int userIdBuyer, String statusBarang);
     List<ViewNotifikasi> findByBarangId(int barangId);
+
 }
