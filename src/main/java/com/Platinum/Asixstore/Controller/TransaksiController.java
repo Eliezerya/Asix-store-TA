@@ -45,6 +45,18 @@ public class TransaksiController {
             return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
         }
     }
+    @DeleteMapping ("/transaksi/tolak/{userId}/{barangId}")
+    public ResponseEntity<?> transaksi_tolak(@PathVariable("barangId")int barangId, @PathVariable("userId") int userId){
+        if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
+            transaksiService.transaksi_tolak(barangId, userId);
+            return new ResponseEntity<>("Penawaran Ditolak !", HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
+        }
+    }
+
+
+
     @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){

@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/barang/{tipeBarang}",
                 "/barang",
                 "/detail-barang/{barangId}",
+                "/daftar-jual/{statusId}",
                 "/refresh-token").permitAll();
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
