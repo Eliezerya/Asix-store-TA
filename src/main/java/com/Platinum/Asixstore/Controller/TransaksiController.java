@@ -39,7 +39,7 @@ public class TransaksiController {
     @GetMapping("/transaksi/{userId}/{barangId}")
     public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
-            transaksiService.transaksi(barangId, userId);
+            transaksiService.transaksiTerima(barangId, userId);
             return new ResponseEntity<>("Transaksi Berhasil !", HttpStatus.ACCEPTED);
         }else {
             return new ResponseEntity<>("Don't have any Access", HttpStatus.NO_CONTENT);
