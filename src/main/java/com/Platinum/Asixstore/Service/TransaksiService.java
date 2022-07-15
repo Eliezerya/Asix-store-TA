@@ -39,6 +39,9 @@ public class TransaksiService {
     @Autowired
     NotifikasiRepo notifikasiRepo;
 
+    @Autowired
+    BarangBuyerRepo barangBuyerRepo;
+
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth;
@@ -55,7 +58,7 @@ public class TransaksiService {
         tawar.setBuyer(buyer);
         tawar.setUpdatedAt(new Date());
 
-        notifikasi.setBarang(tawar);
+        notifikasi.setBarangId(tawar);
         notifikasi.setHargaBarang(tawar.getHargaBarang());
         notifikasi.setBuyer(buyer);
         notifikasi.setNamaBarang(tawar.getNamaBarang());
@@ -97,6 +100,16 @@ public class TransaksiService {
         User buyer = barang.getBuyer();
         transaksi.setBuyer(buyer);
         return transaksiRepo.save(transaksi);
+    }
+
+    public Barang transaksi_tolak(int barangId, int userId){
+        notifikasiRepo.deleteNative(barangId);
+        Barang barang = barangRepo.findByBarangId(barangId);
+        List<Status> getStatus = statusRepo.findByStatusId(3);
+        barang.setStatus(getStatus);
+        barangBuyerRepo.deleteNative(barangId);
+
+        return barangRepo.save(barang);
     }
 
     public List<ViewNotifikasi> view_transaksi_BarangId(int barangId) {
