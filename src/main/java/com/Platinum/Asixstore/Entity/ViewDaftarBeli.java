@@ -31,4 +31,6 @@ public class ViewDaftarBeli {
     private byte[] gambarBarang;
     @Column(name = "tanggal_tawar")
     private Date tanggalTransaksi;
+    @Column(name = "tipe_barang")
+    private String tipeBarang;
 }

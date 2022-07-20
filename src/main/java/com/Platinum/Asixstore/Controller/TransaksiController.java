@@ -55,8 +55,6 @@ public class TransaksiController {
         }
     }
 
-
-
     @PutMapping("/barang/tawar/{barangId}") // tawar barang untuk buyer
     public ResponseEntity<?> beli_tawar_harga(@PathVariable("barangId") int barangId, BarangDto barangDto) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
