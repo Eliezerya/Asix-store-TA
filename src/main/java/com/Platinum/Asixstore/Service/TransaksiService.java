@@ -49,6 +49,8 @@ public class TransaksiService {
 
     public Barang update_harga_tawar(int barangId, BarangDto barangDto) {
         Barang tawar = barangRepo.findByBarangId(barangId);
+
+
         Notifikasi notifikasi = new Notifikasi();
 
         User buyer = userRepo.findByEmail(authentication().getPrincipal().toString());
@@ -75,12 +77,13 @@ public class TransaksiService {
         return viewNotifikasiRepo.findByUserIdSellerAndStatusBarang(userIdSeller,statusBarang);
     }
 
-    public List<ViewNotifikasiBuyer> notifikasi_buyer(int userIdBuyer, String statusBarang) {
-        return viewNotifikasiBuyerRepo.findByUserIdBuyerAndStatusBarang(userIdBuyer,statusBarang);
+    public List<ViewNotifikasi> notifikasi_buyer(int userIdBuyer, String statusBarang) {
+        return viewNotifikasiRepo.findByUserIdBuyerAndStatusBarang(userIdBuyer,statusBarang);
     }
 
     public Transaksi transaksiTerima(int barangId, int userId) {
 
+        System.out.println("sukses");
         Barang barang = barangRepo.findByBarangId(barangId);
         Transaksi transaksi = new Transaksi();
         transaksi.setBarang(barang);
@@ -88,6 +91,7 @@ public class TransaksiService {
         transaksi.setHargaBarang(barang.getHargaTawar());
         transaksi.setNamaBarang(barang.getNamaBarang());
 
+        //sold
         List<Status> getStatus = statusRepo.findByStatusId(2);
         barang.setStatus(getStatus);
 

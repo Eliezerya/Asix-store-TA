@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class ViewBarangController {
     @Autowired
     BarangRepo barangRepo;

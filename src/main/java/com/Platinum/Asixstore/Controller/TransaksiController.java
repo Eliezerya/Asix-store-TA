@@ -3,7 +3,6 @@ package com.Platinum.Asixstore.Controller;
 import com.Platinum.Asixstore.Dto.BarangDto;
 import com.Platinum.Asixstore.Dto.TransaksiDto;
 import com.Platinum.Asixstore.Entity.Barang;
-import com.Platinum.Asixstore.Entity.Transaksi;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.TransaksiRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
@@ -21,6 +20,7 @@ import javax.transaction.Transactional;
 
 @RestController
 @Transactional
+@CrossOrigin
 public class TransaksiController {
     @Autowired
     TransaksiService transaksiService;
@@ -30,6 +30,9 @@ public class TransaksiController {
     ViewDaftarBeliService viewDaftarBeliService;
     @Autowired
     BarangRepo barangRepo;
+
+    @Autowired
+
 
     public Authentication authentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -67,7 +70,7 @@ public class TransaksiController {
 
     @RequestMapping(value = "/daftar-beli/{userIdBuyer}/{statusBarang}", method = RequestMethod.GET)
     public ResponseEntity<?> display_daftarbeliBuyer(@PathVariable("userIdBuyer") int userIdBuyer, @PathVariable("statusBarang") String statusBarang) {
-        return new ResponseEntity<>(viewDaftarBeliService.display_daftar_beli(userIdBuyer, statusBarang), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/transaksi-detail/{barangId}")

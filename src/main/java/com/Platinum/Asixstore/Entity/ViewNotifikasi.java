@@ -32,8 +32,9 @@ public class ViewNotifikasi {
     private byte[] gambarBarang;
     @Column(name = "nama_buyer")
     private String namaBuyer;
-    @Column(name = "tanggal_tawar")
-    private Date tanggalTawar;
+
+//    @Column(name = "tanggal_tawar")
+//    private Date tanggalTawar;
     @Column (name = "kota")
     private String kota;
     @Lob

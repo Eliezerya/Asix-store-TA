@@ -10,6 +10,7 @@ import com.Platinum.Asixstore.Repository.StatusRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.BarangService;
 import com.Platinum.Asixstore.Service.ViewBarangService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@Transactional
+@RequiredArgsConstructor
+@CrossOrigin
 public class BarangController {
     //tesdoang
 
@@ -62,7 +64,7 @@ public class BarangController {
 
     }
 
-    @RequestMapping("barang/delete/{barangId}") //delete barang
+    @DeleteMapping("/barang/delete/{barangId}") //delete barang
     public ResponseEntity<?> hapus_barang(@PathVariable("barangId") int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
         User user = userRepo.findById(barang.getUser().getUserId());

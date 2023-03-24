@@ -13,15 +13,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //jangan di hapus//
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 //jangan di hapus//
 
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@CrossOrigin
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public final UserDetailsService userDetailsService;
 
@@ -35,26 +34,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-    //uncomment if deploy to heroku
-    private CorsConfigurationSource configurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedHeader(config.ALL);
-        config.addAllowedMethod(config.ALL);
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
-    //uncomment if deploy to heroku
+    //uncomment if deploy
+//    private CorsConfigurationSource configurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader(config.ALL);
+//        config.addAllowedMethod(config.ALL);
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
+    //uncomment if deploy
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //uncomment if deploy to heroku
-        http.cors().configurationSource(configurationSource()).and().requiresChannel().anyRequest().requiresSecure();
-        //uncomment if deploy to heroku
+        //uncomment if deploy
+//        http.cors().configurationSource(configurationSource()).and().requiresChannel().anyRequest().requiresSecure();
+        //uncomment if deploy
         http.csrf().disable();
-
+        http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers(
@@ -74,11 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        http.authorizeRequests().antMatchers("/seller", "/barang/{userId}/daftar").hasAnyAuthority("SELLER")
+        http.authorizeRequests().antMatchers("/seller", "/barang/{userId}/daftar","barang/delete/{barangId}").hasAnyAuthority("SELLER")
 
                 .and().authorizeRequests().antMatchers("/barang/tawar/{barangId}").hasAnyAuthority("BUYER");
 
-        http.authorizeRequests().anyRequest().authenticated();
+//        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
         //get get token dari endpoint login ke endpoint lainnya
         http.addFilterBefore(new CostumizeAuthorFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilter(new CostumizeFilter(authenticationManagerBean()));

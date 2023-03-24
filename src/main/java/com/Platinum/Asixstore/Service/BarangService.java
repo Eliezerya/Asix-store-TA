@@ -62,6 +62,7 @@ public class BarangService {
             barang.setHargaBarang(barangDto.getHargaBarang());
             barang.setHargaTawar(barangDto.getHargaBarang());
             barang.setCreatedAt(new Date());
+            System.out.println("BARANGTEST");
             return barangRepo.save(barang);
         }else {
             return null;
@@ -73,10 +74,12 @@ public class BarangService {
     public boolean delete_barang(int barangId) {
         Barang barang = barangRepo.findByBarangId(barangId);
         if (barang != null) {
+            System.out.println("DELETED");
             statusMasterRepo.deleteNative(barangId);
             barangRepo.deleteById(barangId);
             return true;
         } else {
+            System.out.println("FALSE");
             return false;
         }
     }

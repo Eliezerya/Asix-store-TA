@@ -4,6 +4,7 @@ import com.Platinum.Asixstore.Dto.BuyerDto;
 import com.Platinum.Asixstore.Dto.UserDto;
 import com.Platinum.Asixstore.Entity.Role;
 import com.Platinum.Asixstore.Entity.User;
+import com.Platinum.Asixstore.Repository.RoleRepo;
 import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.UserService;
 import com.Platinum.Asixstore.Service.impl.UserLoginServiceImpl;
@@ -36,6 +37,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @Transactional
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService userService;
@@ -44,7 +46,8 @@ public class UserController {
     @Autowired
     UserRepo userRepo;
 
-
+    @Autowired
+    RoleRepo roleRepo;
 
 
     public Authentication authentication() {
@@ -79,9 +82,19 @@ public class UserController {
 
         User userToken = userRepo.findById(userId);
 
+        if (roleRepo.findByIdRole(2).isEmpty()) {
+            Role role = new Role();
+            role.setIdRole(2);
+            role.setRoleName("SELLER");
+            roleRepo.save(role);
+        }
+
+
         if (userToken.getEmail().equalsIgnoreCase(authentication().getPrincipal().toString())) {
+
             userService.update_role(userId);
             userService.display_userId(userId);
+
             return new ResponseEntity<>("Update Seller telah berhasil,\nAnda bisa menjual barang", HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>("baka mitaii", HttpStatus.BAD_GATEWAY);
@@ -102,6 +115,15 @@ public class UserController {
     @PostMapping("/Buyer/registrasi") //register
     public ResponseEntity<?> submit_user_buyer(@RequestBody BuyerDto buyerDto) {
         User userLogin = userLoginService.findByUsername(buyerDto.getEmail());
+        List<Role> roleList = roleRepo.findByIdRole(1);
+        try {
+            roleList.get(0);
+        } catch (Exception e) {
+            Role role = new Role();
+            role.setIdRole(1);
+            role.setRoleName("BUYER");
+            roleRepo.save(role);
+        }
         if (userLogin != null) {
             return new ResponseEntity<>(userLogin, HttpStatus.BAD_REQUEST);
         } else {
