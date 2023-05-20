@@ -36,6 +36,7 @@ public class NotifikasiController {
     @RequestMapping(value = "/user/notifikasi-buyer/{userIdBuyer}/{statusBarang}" , method = RequestMethod.GET)
     public ResponseEntity<?> notifikasi_buyer(@PathVariable int userIdBuyer,@PathVariable String statusBarang) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(userRepo.findById(userIdBuyer).getEmail())){
+
             return new ResponseEntity<>(transaksiService.notifikasi_buyer(userIdBuyer,statusBarang), HttpStatus.ACCEPTED);
         }else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

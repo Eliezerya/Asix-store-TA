@@ -9,8 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -20,6 +19,10 @@ public class TransaksiService {
     BarangRepo barangRepo;
 
     @Autowired
+    AprioriRepo aprioriRepo;
+
+
+    @Autowired
     UserRepo userRepo;
 
     @Autowired
@@ -27,11 +30,12 @@ public class TransaksiService {
 
     @Autowired
     TransaksiRepo transaksiRepo;
-    @Autowired
-    ViewNotifikasiRepo viewNotifikasiRepo;
 
     @Autowired
-    ViewNotifikasiBuyerRepo viewNotifikasiBuyerRepo;
+    RekomendasiUserRepo rekomendasiUserRepo;
+
+    @Autowired
+    ViewNotifikasiRepo viewNotifikasiRepo;
 
     @Autowired
     RoleRepo roleRepo;
@@ -74,16 +78,15 @@ public class TransaksiService {
 
     //seller notifikasi
     public List<ViewNotifikasi> notifikasi_seller(int userIdSeller, String statusBarang) {
-        return viewNotifikasiRepo.findByUserIdSellerAndStatusBarang(userIdSeller,statusBarang);
+        return viewNotifikasiRepo.findByUserIdSellerAndStatusBarang(userIdSeller, statusBarang);
     }
 
     public List<ViewNotifikasi> notifikasi_buyer(int userIdBuyer, String statusBarang) {
-        return viewNotifikasiRepo.findByUserIdBuyerAndStatusBarang(userIdBuyer,statusBarang);
+        return viewNotifikasiRepo.findByUserIdBuyerAndStatusBarang(userIdBuyer, statusBarang);
     }
 
-    public Transaksi transaksiTerima(int barangId, int userId) {
+    public Transaksi transaksiTerima(int barangId, int seller) {
 
-        System.out.println("sukses");
         Barang barang = barangRepo.findByBarangId(barangId);
         Transaksi transaksi = new Transaksi();
         transaksi.setBarang(barang);
@@ -95,17 +98,117 @@ public class TransaksiService {
         List<Status> getStatus = statusRepo.findByStatusId(2);
         barang.setStatus(getStatus);
 
-        User user = userRepo.findById(userId);
+        User user = userRepo.findById(seller);
         transaksi.setSeller(user);
         transaksi.getSeller().setUserId(user.getUserId());
         transaksi.setCreatedAt(new Date());
         User buyer = barang.getBuyer();
         transaksi.setBuyer(buyer);
+
+        //Apriori Logic
+
+        String namaTypeBarangBaru = barang.getTipeBarang().toUpperCase();
+        List<BarangBuyer> barangBuyerLs = barangBuyerRepo.findAllByUserId(buyer.getUserId());
+
+        List<Apriori> aprioriCheck = aprioriRepo.findAllByBarang(namaTypeBarangBaru);
+        List<Apriori> rekomendasiAprioriCheck = aprioriRepo.findAllByRekomendasi(namaTypeBarangBaru);
+        List<Apriori> aprioris = new ArrayList<>();
+
+        if (!aprioriCheck.isEmpty()) {
+            aprioris = aprioriCheck;
+        } else if (!rekomendasiAprioriCheck.isEmpty()) {
+            aprioris = rekomendasiAprioriCheck;
+        }
+
+        if (!aprioris.isEmpty()) {
+            //Not Null
+            System.out.println("masuk ke not null");
+            if (aprioris.size() == 1) {
+                //kondisi kalau barang di apriori == 1
+                aprioris.get(0).setBarang(namaTypeBarangBaru);
+                aprioris.get(0).setRekomendasi(aprioris.get(0).getRekomendasi().toUpperCase());
+                aprioris.get(0).setSupport(aprioris.get(0).getSupport() + 1);
+                aprioriRepo.save(aprioris.get(0));
+            } else {
+                //kondisi kalau barang di apriori > 1
+                Barang barangUser;
+                int indexApriori = 0;
+                for (BarangBuyer bb : barangBuyerLs) {
+                    barangUser = barangRepo.findByBarangId(bb.getBarangId());
+
+                    String barangRekomendasiDariApriori = aprioriCheck.get(indexApriori).getRekomendasi();
+                    String barangYgPernahDibeli = barangUser.getTipeBarang();
+
+                    if (barangRekomendasiDariApriori.equalsIgnoreCase(barangYgPernahDibeli)) {
+                        Apriori apriori = aprioriRepo.findByBarangAndRekomendasi(namaTypeBarangBaru, barangYgPernahDibeli);
+                        apriori.setSupport(apriori.getSupport() + 1);
+                        aprioriRepo.save(apriori);
+                        System.out.println("Sukses");
+                    }
+                }
+            }
+
+        } else {
+            // Null
+            System.out.println("masuk Null");
+            Apriori newBarangApriori = new Apriori();
+
+            newBarangApriori.setBarang(barang.getTipeBarang());
+
+            Barang barangRekomendasi;
+            for (BarangBuyer a : barangBuyerLs) {
+                barangRekomendasi = barangRepo.findByBarangId(a.getBarangId());
+                System.out.println("barang buyer :" + barangRekomendasi.getTipeBarang());
+
+                if (!barangRekomendasi.getTipeBarang().equalsIgnoreCase(barang.getTipeBarang())) {
+                    newBarangApriori.setRekomendasi(barangRekomendasi.getTipeBarang());
+                    break;
+                }
+            }
+            newBarangApriori.setSupport(1);
+            aprioriRepo.save(newBarangApriori);
+
+        }
+        // logic rekomendasi barang from the max support
+
+        int max = 0;
+        String rekomendasiFix = "";
+        int index = 1;
+        for (BarangBuyer barangRekomendasi : barangBuyerLs) {
+
+            Barang rekBarang = barangRepo.findByBarangId(barangRekomendasi.getBarangId());
+            System.out.println("index barang buyer ls : " + index);
+            index = index+1;
+            Apriori apriori1 = aprioriRepo.findByBarang(rekBarang.getTipeBarang());
+            System.out.println("sudah masuk ke apriori1 :" + apriori1.getRekomendasi());
+            if (apriori1.getSupport()>max){
+                rekomendasiFix = apriori1.getRekomendasi();
+                max = apriori1.getSupport();
+                System.out.println("max : " +max);
+                System.out.println("rekomendasiFix : " + rekomendasiFix);
+            }
+
+        }
+        //sett it up
+        RekomendasiUser rekomendasiUser;
+        Optional<RekomendasiUser> rekomendasiUserOptional = rekomendasiUserRepo.findById(buyer.getUserId());
+
+        if (rekomendasiUserOptional.isPresent()) {
+            rekomendasiUser = rekomendasiUserOptional.get();
+
+        } else {
+            rekomendasiUser = new RekomendasiUser();
+            rekomendasiUser.setUserId(buyer.getUserId());
+        }
+        rekomendasiUser.setRekomendasi(rekomendasiFix);
+        rekomendasiUserRepo.save(rekomendasiUser);
+
+        System.out.println("barang rekomendasi : "+rekomendasiFix );
         return transaksiRepo.save(transaksi);
     }
 
 
-    public Barang transaksi_tolak(int barangId, int userId){
+    public Barang transaksi_tolak(int barangId, int userId) {
         notifikasiRepo.deleteNative(barangId);
         Barang barang = barangRepo.findByBarangId(barangId);
         List<Status> getStatus = statusRepo.findByStatusId(1);

@@ -32,6 +32,9 @@ public class BarangService {
     ViewBarangRepo viewBarangRepo;
 
     @Autowired
+    AprioriRepo aprioriRepo;
+
+    @Autowired
     StatusMasterRepo statusMasterRepo;
 
     public Authentication authentication() {
@@ -62,7 +65,15 @@ public class BarangService {
             barang.setHargaBarang(barangDto.getHargaBarang());
             barang.setHargaTawar(barangDto.getHargaBarang());
             barang.setCreatedAt(new Date());
-            System.out.println("BARANGTEST");
+
+            Apriori apriori = new Apriori();
+            if (aprioriRepo.findByBarang(barang.getTipeBarang().toUpperCase()) == null){
+                apriori.setBarang(barang.getTipeBarang().toUpperCase());
+                apriori.setSupport(0);
+                aprioriRepo.save(apriori);
+            }
+
+
             return barangRepo.save(barang);
         }else {
             return null;

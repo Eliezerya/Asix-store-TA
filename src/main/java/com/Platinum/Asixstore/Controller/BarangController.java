@@ -81,6 +81,7 @@ public class BarangController {
         }
     }
 
+    @Transactional
     @PutMapping("/barang/update/{userId}/{barangId}") // update isi barang
     public ResponseEntity<?> update_barang(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId, @RequestParam("barangImg") MultipartFile fileUpload, BarangDto barangDto) throws IOException {
         Barang barang = barangRepo.findByBarangId(barangId);

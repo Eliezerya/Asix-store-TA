@@ -1,14 +1,9 @@
 package com.Platinum.Asixstore.Controller;
 
 import com.Platinum.Asixstore.Dto.BarangDto;
-import com.Platinum.Asixstore.Dto.TransaksiDto;
-import com.Platinum.Asixstore.Entity.Barang;
 import com.Platinum.Asixstore.Repository.BarangRepo;
 import com.Platinum.Asixstore.Repository.TransaksiRepo;
-import com.Platinum.Asixstore.Repository.UserRepo;
 import com.Platinum.Asixstore.Service.TransaksiService;
-import com.Platinum.Asixstore.Service.ViewBarangService;
-import com.Platinum.Asixstore.Service.ViewDaftarBeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +22,7 @@ public class TransaksiController {
     @Autowired
     TransaksiRepo transaksiRepo;
     @Autowired
-    ViewDaftarBeliService viewDaftarBeliService;
-    @Autowired
     BarangRepo barangRepo;
-
-    @Autowired
 
 
     public Authentication authentication() {
@@ -40,7 +31,7 @@ public class TransaksiController {
     }
 
     @GetMapping("/transaksi/{userId}/{barangId}")
-    public ResponseEntity<?> transaksi_seller_buyer(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
+    public ResponseEntity<?> transaksi_berhasil(@PathVariable("barangId") int barangId, @PathVariable("userId") int userId) {
         if (authentication().getPrincipal().toString().equalsIgnoreCase(barangRepo.findByBarangId(barangId).getUser().getEmail())){
             transaksiService.transaksiTerima(barangId, userId);
             return new ResponseEntity<>("Transaksi Berhasil !", HttpStatus.ACCEPTED);

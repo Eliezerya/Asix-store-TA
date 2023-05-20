@@ -1,13 +1,11 @@
 package com.Platinum.Asixstore.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
-import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity

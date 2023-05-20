@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -41,6 +42,8 @@ public class UserService {
         user.setKota(userDto.getKota());
         user.setImg(userDto.getImg().getBytes());
         userRepo.save(user);
+
+        float x = 2.8f;
     }
 
     public void update_role(int userId) throws IOException {

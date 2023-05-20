@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -15,5 +16,9 @@ public interface BarangBuyerRepo extends JpaRepository<BarangBuyer, Integer> {
     @Modifying
     @Query(value = "delete from barang_buyer bb where bb.barang_id =:barangId", nativeQuery = true)
     public void deleteNative(@Param("barangId")int barangId);
+
+    public BarangBuyer findByBarangId(int barangid);
+
+    public List<BarangBuyer> findAllByUserId(int userId);
 
 }

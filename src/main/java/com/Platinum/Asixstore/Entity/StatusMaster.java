@@ -18,4 +18,7 @@ public class StatusMaster {
     private int barangId;
     @Column(name = "status_id")
     private int statusId;
+
+
+    
 }

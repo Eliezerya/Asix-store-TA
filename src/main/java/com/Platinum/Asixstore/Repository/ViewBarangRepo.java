@@ -16,4 +16,6 @@ public interface ViewBarangRepo extends JpaRepository<ViewBarang, Integer> {
     List<ViewBarang> findByUserIdAndStatusId(int userId, int statusId);
     ViewBarang findByBarangId(int barangId);
 
+    ViewBarang findByUserId(int userId);
+
 }
