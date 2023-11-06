@@ -41,9 +41,17 @@ public class AprioriService {
     public List<ViewBarangApriori> view_apriori() {
 
         User akun = userRepo.findByEmail(authentication().getPrincipal().toString());
+        System.out.println("email User Akun::"+authentication().getPrincipal().toString());
 
-        Optional<RekomendasiUser> rekomendasiUser = rekomendasiUserRepo.findById(akun.getUserId());
+        RekomendasiUser rekomendasiUser = rekomendasiUserRepo.findByUserId(akun.getUserId());
 
-        return viewBarangAprioriRepo.findByStatusIdAndTipeBarang( 1,rekomendasiUser.get().getRekomendasi());
+        System.out.println("Rekomendasi untuk buyer :"+rekomendasiUser.getRekomendasi());
+        if (rekomendasiUser.getRekomendasi() == null){
+
+        }
+        List<ViewBarangApriori> barangAprioris = viewBarangAprioriRepo.findAllByStatusIdAndTipeBarang( 1,rekomendasiUser.getRekomendasi());
+        System.out.println("Isi Barang :" + barangAprioris.get(0).getNamaBarang());
+        System.out.println("ID Barang :" + barangAprioris.get(0).getBarangId());
+        return barangAprioris;
     }
 }

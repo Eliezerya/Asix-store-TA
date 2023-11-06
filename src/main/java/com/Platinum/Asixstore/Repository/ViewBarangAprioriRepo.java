@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ViewBarangAprioriRepo extends JpaRepository<ViewBarangApriori, Integer> {
-    List<ViewBarangApriori> findByStatusIdAndTipeBarang( int statusId,String tipe);
+    List<ViewBarangApriori> findAllByStatusIdAndTipeBarang( int statusId,String tipe);
 }

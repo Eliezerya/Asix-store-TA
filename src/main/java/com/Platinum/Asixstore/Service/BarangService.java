@@ -67,8 +67,9 @@ public class BarangService {
             barang.setCreatedAt(new Date());
 
             Apriori apriori = new Apriori();
-            if (aprioriRepo.findByBarang(barang.getTipeBarang().toUpperCase()) == null){
+            if (aprioriRepo.findAllByBarang(barang.getTipeBarang().toUpperCase()) == null){
                 apriori.setBarang(barang.getTipeBarang().toUpperCase());
+                apriori.setRekomendasi("DUMMY");
                 apriori.setSupport(0);
                 aprioriRepo.save(apriori);
             }
